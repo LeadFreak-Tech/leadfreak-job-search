@@ -1,0 +1,2963 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>JobFit — resume-fit job search</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* ═══════════════════════════ tokens ═══════════════════════════ */
+:root{
+  --bg:#F8F8FA;
+  --surface:#FFFFFF;
+  --surface-2:#FAF9FC;
+  --surface-3:#F3F1F6;
+
+  --primary:#6D3FE2;
+  --primary-hover:#5A2FC7;
+  --primary-active:#4A25AA;
+  --primary-soft:#EFE7FC;
+  --primary-line:#D9C9F8;
+
+  --ink:#1D1830;
+  --ink-2:#5A5468;
+  --ink-3:#8B8598;
+  --ink-4:#B5B0BE;
+
+  --border:#E4E1E8;
+  --border-2:#CFC7D7;
+
+  --ok:#3E9F5E; --ok-bg:#E1F3E7;
+  --warn:#E28A1F; --warn-bg:#FBEDD4;
+  --err:#C43F5A; --err-bg:#FBE0E5;
+
+  --shadow-xs:0 1px 0 rgba(29,24,48,.03);
+  --shadow-sm:0 1px 2px rgba(29,24,48,.05), 0 1px 0 rgba(29,24,48,.02);
+  --shadow-md:0 1px 3px rgba(29,24,48,.06), 0 4px 12px -4px rgba(29,24,48,.08);
+  --shadow-pop:0 12px 32px -8px rgba(29,24,48,.16), 0 2px 6px rgba(29,24,48,.05);
+  --focus-ring:0 0 0 3px rgba(109,63,226,.18);
+
+  --radius:8px;
+  --radius-sm:6px;
+  --radius-md:8px;
+  --radius-lg:12px;
+
+  --font:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --content:1240px;
+}
+
+/* ═══════════════════════════ base ═══════════════════════════ */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--ink);
+  font-size:14px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:4px}
+::selection{background:var(--primary-soft);color:var(--ink)}
+
+.shell{max-width:var(--content);margin:0 auto;padding:0 24px}
+@media (max-width:640px){.shell{padding:0 16px}}
+
+/* ═══════════════════════════ header ═══════════════════════════ */
+header.app-header{
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:40;
+}
+.app-header-inner{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px;
+}
+.brand-block{display:flex;align-items:center;gap:12px;min-width:0}
+.brand{display:flex;align-items:center;gap:9px}
+.brand-mark{
+  width:28px;height:28px;flex:none;
+  background:var(--primary);color:#FFFFFF;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:13px;letter-spacing:-.02em;
+  box-shadow:inset 0 -1px 0 rgba(0,0,0,.15), 0 1px 0 rgba(255,255,255,.4);
+}
+.brand-name{font-weight:600;font-size:15.5px;letter-spacing:-.01em;color:var(--ink)}
+.brand-tag{
+  color:var(--ink-3);font-weight:400;font-size:13px;
+  padding-left:12px;margin-left:2px;
+  border-left:1px solid var(--border);
+}
+@media (max-width:900px){
+  .brand-tag{display:none}
+}
+
+/* ═══════════════════════════ main ═══════════════════════════ */
+main{padding:28px 0 80px}
+
+.page-title-row{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:24px;
+  margin-bottom:24px;
+}
+.page-title-block h1{
+  margin:0;font-size:24px;font-weight:700;letter-spacing:-.02em;color:var(--ink);
+}
+
+
+
+
+/* ═══════════════════════════ workspace ═══════════════════════════ */
+.ws{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+/* ═══════════════════════════ card ═══════════════════════════ */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-xs);
+  overflow:visible;
+}
+.card-head{
+  padding:14px 20px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.card-head-l{display:flex;align-items:center;gap:10px;min-width:0}
+.card-num{
+  width:22px;height:22px;flex:none;border-radius:50%;
+  background:var(--primary-soft);color:var(--primary);
+  font-weight:600;font-size:11.5px;
+  display:flex;align-items:center;justify-content:center;
+}
+.card-title{
+  margin:0;font-size:14.5px;font-weight:600;color:var(--ink);letter-spacing:-.005em;
+}
+.card-hint{font-size:12px;color:var(--ink-3);text-align:right}
+
+.card-body{padding:16px 20px}
+.subhead{
+  display:flex;align-items:baseline;justify-content:space-between;gap:8px;
+  margin:14px 0 8px;
+}
+.subhead-t{font-size:12px;font-weight:600;color:var(--ink-2)}
+.subhead-t span.mut{color:var(--ink-3);font-weight:400}
+.subhead-s{font-size:11.5px;color:var(--ink-3)}
+.divider{height:1px;background:var(--border);margin:16px 0}
+
+/* ═══════════════════════════ form basics ═══════════════════════════ */
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field .label{
+  display:flex;align-items:center;gap:5px;
+  font-size:12.5px;color:var(--ink-2);font-weight:500;
+}
+.field .hint{color:var(--ink-4);font-weight:400;font-size:11.5px}
+.info-tip{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:14px;height:14px;border-radius:50%;
+  background:var(--surface-3);color:var(--ink-3);
+  font-size:9.5px;font-weight:700;cursor:help;
+  border:1px solid var(--border);font-family:var(--font);
+}
+.info-tip:hover{color:var(--primary);border-color:var(--primary-line)}
+.input,.select,.ms-trigger{
+  width:100%;height:38px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:0 12px;
+  font-size:13.5px;color:var(--ink);
+  transition:border-color .12s ease, box-shadow .12s ease;
+}
+.input::placeholder{color:var(--ink-4)}
+.input:hover:not(:focus),.select:hover:not(:focus),.ms-trigger:hover{border-color:var(--border-2)}
+.input:focus,.select:focus,.ms-trigger:focus{
+  outline:0;border-color:var(--primary);box-shadow:var(--focus-ring);
+}
+.select{
+  appearance:none;-webkit-appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='none' stroke='%238B8598' stroke-width='1.5' d='M1 1l4 4 4-4'/></svg>");
+  background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;
+}
+.input.num{-moz-appearance:textfield}
+.input.num::-webkit-outer-spin-button,.input.num::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+
+.grid{display:grid;gap:12px}
+.grid.g2{grid-template-columns:1fr 1fr}
+.grid.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:900px){
+  .grid.g3,.grid.g4{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:640px){
+  .grid.g2,.grid.g3,.grid.g4{grid-template-columns:1fr}
+}
+
+/* ═══════════════════════════ multi-select ═══════════════════════════ */
+.ms{position:relative}
+.ms-trigger{
+  text-align:left;display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;
+}
+.ms-trigger .val{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0}
+.ms-trigger .val.placeholder{color:var(--ink-3)}
+.ms-trigger .chev{
+  width:10px;height:6px;flex:none;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='none' stroke='%238B8598' stroke-width='1.5' d='M1 1l4 4 4-4'/></svg>") no-repeat center;
+}
+.ms-menu{
+  position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:50;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius-sm);box-shadow:var(--shadow-pop);
+  padding:4px;max-height:320px;overflow-y:auto;display:none;
+}
+.ms-menu.open{display:block}
+.ms-option{
+  display:flex;align-items:center;gap:10px;
+  padding:7px 8px;border-radius:4px;font-size:13px;color:var(--ink);
+  cursor:pointer;user-select:none;
+}
+.ms-option:hover{background:var(--surface-3)}
+.ms-check{
+  width:16px;height:16px;flex:none;
+  border:1.5px solid var(--border-2);border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--surface);transition:background .1s, border-color .1s;
+}
+.ms-option[aria-selected="true"] .ms-check{background:var(--primary);border-color:var(--primary)}
+.ms-option[aria-selected="true"] .ms-check::after{
+  content:"";width:8px;height:4px;
+  border:1.5px solid #FFFFFF;border-top:0;border-right:0;
+  transform:rotate(-45deg) translate(1px,-1px);
+}
+.ms-divider{height:1px;background:var(--border);margin:4px 2px}
+
+.ms-search-wrap{
+  position:sticky;top:0;background:var(--surface);
+  padding:4px 2px 6px;z-index:1;
+  border-bottom:1px solid var(--border);margin-bottom:4px;
+}
+.ms-search{
+  width:100%;height:32px;
+  background:var(--surface-2);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:0 10px 0 30px;
+  font-size:13px;color:var(--ink);
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 20 20' fill='none'><circle cx='9' cy='9' r='6' stroke='%238B8598' stroke-width='1.5'/><path d='M14 14l3 3' stroke='%238B8598' stroke-width='1.5' stroke-linecap='round'/></svg>");
+  background-repeat:no-repeat;background-position:9px center;
+}
+.ms-search:focus{outline:0;border-color:var(--primary);box-shadow:var(--focus-ring)}
+.ms-note{padding:6px 10px;font-size:11.5px;color:var(--ink-3)}
+.ms-empty{padding:16px 10px;text-align:center;font-size:12.5px;color:var(--ink-3)}
+
+/* selected industries chip row (below the trigger) */
+.ms-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.ms-chips:empty{display:none}
+
+/* ═══════════════════════════ chip ═══════════════════════════ */
+.chip{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 5px 3px 10px;
+  background:var(--primary-soft);color:var(--primary);
+  border-radius:100px;font-size:12.5px;font-weight:500;line-height:1.4;
+  border:1px solid var(--primary-line);
+}
+.chip .x{
+  width:16px;height:16px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--primary);font-size:13px;line-height:1;transition:background .1s;
+}
+.chip .x:hover{background:var(--primary);color:#fff}
+
+.chip-sm{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:2px 4px 2px 8px;
+  background:var(--primary-soft);color:var(--primary);
+  border-radius:100px;font-size:11.5px;font-weight:500;
+  border:1px solid var(--primary-line);
+}
+.chip-sm .x{
+  width:14px;height:14px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--primary);font-size:11px;transition:background .1s;
+}
+.chip-sm .x:hover{background:var(--primary);color:#fff}
+
+/* ═══════════════════════════ Titles panel ═══════════════════════════ */
+.select-all-row{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-bottom:8px;
+}
+.select-all-btn{
+  font-size:12px;font-weight:500;color:var(--primary);
+  padding:3px 8px;border-radius:4px;
+  border:1px solid var(--primary-line);background:var(--primary-soft);
+  cursor:pointer;transition:all .12s;
+}
+.select-all-btn:hover{background:var(--primary);color:#FFFFFF;}
+.title-row{display:flex;gap:8px;align-items:flex-end}
+.title-row .field{flex:1;min-width:0}
+.gen-btn{
+  height:38px;padding:0 14px;border-radius:var(--radius-sm);
+  background:var(--primary);border:1px solid var(--primary);
+  color:#FFFFFF;font-size:13.5px;font-weight:500;
+  display:inline-flex;align-items:center;gap:8px;flex:none;
+  transition:background .12s;white-space:nowrap;
+  box-shadow:0 1px 0 rgba(29,24,48,.1), inset 0 1px 0 rgba(255,255,255,.14);
+}
+.gen-btn:hover:not(:disabled){background:var(--primary-hover)}
+.gen-btn:active:not(:disabled){background:var(--primary-active)}
+.gen-btn:disabled{opacity:.55;cursor:not-allowed}
+.gen-btn .spin,.gen-btn .icon{
+  width:12px;height:12px;flex:none;
+}
+.gen-btn .spin{
+  border-radius:50%;
+  border:1.5px solid rgba(255,255,255,.35);border-top-color:#FFFFFF;
+  animation:spin .8s linear infinite;display:none;
+}
+.gen-btn[data-loading="true"] .spin{display:block}
+.gen-btn[data-loading="true"] .icon{display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.title-list-empty{
+  padding:14px;font-size:12.5px;color:var(--ink-3);text-align:center;
+  background:var(--surface-2);border-radius:var(--radius);
+  border:1px dashed var(--border-2);
+}
+.title-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;
+}
+@media (max-width:900px){.title-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.title-grid{grid-template-columns:1fr}}
+.title-check{
+  display:flex;align-items:flex-start;gap:9px;
+  padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  cursor:pointer;background:var(--surface);
+  font-size:13px;color:var(--ink);
+  transition:all .12s;user-select:none;min-height:42px;
+}
+.title-check:hover{border-color:var(--primary-line);background:var(--surface-2)}
+.title-check[aria-pressed="true"]{
+  background:var(--primary-soft);border-color:var(--primary-line);color:var(--primary);font-weight:500;
+}
+.title-check .box{
+  width:16px;height:16px;flex:none;
+  border:1.5px solid var(--border-2);border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--surface);transition:all .1s;
+}
+.title-check[aria-pressed="true"] .box{background:var(--primary);border-color:var(--primary)}
+.title-check[aria-pressed="true"] .box::after{
+  content:"";width:8px;height:4px;
+  border:1.5px solid #FFFFFF;border-top:0;border-right:0;
+  transform:rotate(-45deg) translate(1px,-1px);
+}
+.title-check .lbl{
+  min-width:0;overflow-wrap:break-word;word-break:break-word;white-space:normal;line-height:1.35;
+}
+
+.custom-title-row{display:flex;gap:8px;align-items:flex-end}
+.custom-title-row .input{flex:1}
+.mini-btn{
+  height:38px;padding:0 14px;border-radius:var(--radius-sm);
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--ink-2);font-size:13px;font-weight:500;
+  display:inline-flex;align-items:center;gap:6px;flex:none;
+  transition:all .12s;
+}
+.mini-btn:hover:not(:disabled){border-color:var(--primary);color:var(--primary);background:var(--primary-soft)}
+.mini-btn:disabled{opacity:.55;cursor:not-allowed}
+.chip-list{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+
+/* ═══════════════════════════ Resume drop zone ═══════════════════════════ */
+.drop{
+  position:relative;
+  border:1px dashed var(--border-2);
+  border-radius:var(--radius-sm);
+  background:var(--surface-2);
+  padding:14px 16px;
+  display:flex;align-items:center;gap:14px;
+  cursor:pointer;
+  transition:background .12s, border-color .12s;
+  min-height:64px;
+}
+.drop:hover{background:var(--primary-soft);border-color:var(--primary-line)}
+.drop.drag{background:var(--primary-soft);border-color:var(--primary);border-style:solid}
+.drop-icon{
+  width:36px;height:36px;flex:none;border-radius:8px;
+  background:var(--surface);color:var(--primary);
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--border);
+}
+.drop-body{flex:1;min-width:0}
+.drop-title{font-size:13.5px;font-weight:500;color:var(--ink);line-height:1.3}
+.drop-sub{font-size:12px;color:var(--ink-3);margin-top:2px}
+.drop-cta{
+  padding:6px 14px;font-size:13px;color:var(--primary);font-weight:500;
+  border:1px solid var(--primary);border-radius:var(--radius-sm);background:var(--surface);
+  transition:background .12s;
+}
+.drop-cta:hover{background:var(--primary-soft)}
+.filed{
+  margin-top:10px;display:flex;align-items:center;gap:10px;
+  padding:10px 12px;background:var(--surface-2);border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+}
+.filed[hidden]{display:none}
+.filed-icon{
+  width:32px;height:32px;flex:none;border-radius:6px;
+  background:var(--ok-bg);color:var(--ok);
+  display:flex;align-items:center;justify-content:center;
+}
+.filed-body{flex:1;min-width:0}
+.filed-name{font-size:13px;font-weight:500;color:var(--ink);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.filed-meta{font-size:11.5px;color:var(--ink-3);margin-top:1px}
+.filed-x{
+  width:24px;height:24px;flex:none;border-radius:6px;
+  color:var(--ink-3);display:flex;align-items:center;justify-content:center;
+  transition:all .12s;font-size:16px;line-height:1;
+}
+.filed-x:hover{background:var(--surface-3);color:var(--err)}
+
+/* ═══════════════════════════ Filters card — Locations ═══════════════════════════ */
+.loc-container{
+  display:flex;flex-wrap:wrap;align-items:center;gap:5px;
+  padding:5px 6px;min-height:38px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  transition:border-color .12s, box-shadow .12s;
+}
+.loc-container:focus-within{border-color:var(--primary);box-shadow:var(--focus-ring)}
+.loc-container:hover{border-color:var(--border-2)}
+.loc-container:focus-within:hover{border-color:var(--primary)}
+.loc-inline-input{
+  flex:1;min-width:120px;border:0;outline:0;background:transparent;
+  font-size:13.5px;color:var(--ink);padding:4px 6px;height:26px;
+}
+.loc-inline-input::placeholder{color:var(--ink-4)}
+
+/* ═══════════════════════════ Date filter ═══════════════════════════ */
+.date-row{display:flex;flex-wrap:wrap;gap:5px}
+.date-preset{
+  padding:8px 14px;border-radius:var(--radius-sm);font-size:13px;
+  background:var(--surface);border:1px solid var(--border);color:var(--ink-2);
+  cursor:pointer;transition:all .12s;font-weight:500;
+}
+.date-preset:hover{border-color:var(--primary-line);color:var(--ink)}
+.date-preset[aria-pressed="true"]{
+  background:var(--primary);color:#FFFFFF;border-color:var(--primary);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14);
+}
+.date-custom{
+  margin-top:12px;padding:12px 14px;
+  background:var(--surface-2);border:1px solid var(--border);
+  border-radius:var(--radius);display:none;
+}
+.date-custom.open{display:block}
+.date-error{color:var(--err);font-size:12px;margin-top:8px;display:none}
+.date-error.show{display:block}
+
+/* ═══════════════════════════ checkbox row ═══════════════════════════ */
+.cbrow{
+  display:flex;align-items:center;gap:10px;height:38px;
+  padding:0 12px;background:var(--surface);
+  border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;
+}
+.cbrow:hover{border-color:var(--border-2)}
+.cbrow input{position:absolute;opacity:0;pointer-events:none}
+.cbrow .box{
+  width:16px;height:16px;flex:none;
+  border:1.5px solid var(--border-2);border-radius:4px;
+  background:var(--surface);transition:all .1s;
+  display:flex;align-items:center;justify-content:center;
+}
+.cbrow.on .box{background:var(--primary);border-color:var(--primary)}
+.cbrow.on .box::after{
+  content:"";width:8px;height:4px;
+  border:1.5px solid #FFFFFF;border-top:0;border-right:0;
+  transform:rotate(-45deg) translate(1px,-1px);
+}
+.cbrow .lbl{font-size:13px;color:var(--ink-2);font-weight:500}
+.cbrow.on .lbl{color:var(--ink)}
+
+/* ═══════════════════════════ banner ═══════════════════════════ */
+.banner{
+  display:flex;gap:10px;align-items:flex-start;
+  padding:10px 12px;border-radius:6px;font-size:13px;line-height:1.45;
+}
+.banner[hidden]{display:none}
+.banner.err{background:var(--err-bg);color:var(--err)}
+.banner.warn{background:var(--warn-bg);color:var(--warn)}
+.banner-icon{
+  width:16px;height:16px;flex:none;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:11px;color:#FFFFFF;margin-top:1px;
+}
+.banner.err .banner-icon{background:var(--err)}
+.banner.warn .banner-icon{background:var(--warn)}
+
+/* ═══════════════════════════ Continue footer (titles card) ═══════════════════════════ */
+.continue-foot{
+  padding:14px 20px;
+  border-top:1px solid var(--border);
+  background:var(--surface-2);
+  border-radius:0 0 var(--radius-lg) var(--radius-lg);
+  display:none; /* hidden until titles are generated */
+}
+.continue-foot.visible{display:block}
+.btn-continue{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;height:42px;padding:0 24px;border-radius:var(--radius-sm);
+  background:var(--primary);color:#FFFFFF;
+  font-weight:600;font-size:14px;letter-spacing:-.005em;
+  transition:background .12s, transform .06s;
+  box-shadow:0 1px 0 rgba(29,24,48,.12), inset 0 1px 0 rgba(255,255,255,.15);
+  cursor:pointer;
+}
+.btn-continue:hover{background:var(--primary-hover)}
+.btn-continue:active{background:var(--primary-active);transform:translateY(1px)}
+
+/* ═══════════════════════════ Recruiter block ═══════════════════════════ */
+.recruiter-block{
+  margin-top:10px;padding:10px 12px;
+  background:var(--surface-2);border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+}
+.recruiter-label{
+  font-size:11px;font-weight:600;letter-spacing:.06em;
+  color:var(--ink-3);text-transform:uppercase;margin:0 0 6px;
+}
+.recruiter-name{font-size:13px;font-weight:600;color:var(--ink)}
+.recruiter-title{font-size:12px;color:var(--ink-2);margin-top:2px}
+.recruiter-link{font-size:12px;color:var(--primary);margin-top:3px;display:block}
+.recruiter-na{font-size:12.5px;color:var(--ink-3);font-style:italic}
+
+/* ═══════════════════════════ Job Source toggle ═══════════════════════════ */
+.source-toggle{
+  display:flex;gap:6px;
+}
+.source-opt{
+  flex:1;padding:8px 10px;border-radius:var(--radius-sm);
+  border:1px solid var(--border);background:var(--surface);
+  color:var(--ink-2);font-size:13px;font-weight:500;
+  cursor:pointer;text-align:center;transition:all .12s;
+}
+.source-opt:hover{border-color:var(--primary-line);color:var(--ink)}
+.source-opt.active{background:var(--primary);color:#FFFFFF;border-color:var(--primary)}
+
+/* ═══════════════════════════ CTA footer ═══════════════════════════ */
+.cta-foot{
+  padding:14px 20px;
+  border-top:1px solid var(--border);
+  background:var(--surface-2);
+  border-radius:0 0 var(--radius-lg) var(--radius-lg);
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  flex-wrap:wrap;
+}
+.btn-primary{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  height:42px;padding:0 24px;border-radius:var(--radius-sm);
+  background:var(--primary);color:#FFFFFF;
+  font-weight:600;font-size:14px;letter-spacing:-.005em;
+  transition:background .12s, opacity .12s, transform .06s;
+  box-shadow:0 1px 0 rgba(29,24,48,.12), inset 0 1px 0 rgba(255,255,255,.15);
+  flex:1;min-width:220px;
+}
+.btn-primary:hover:not(:disabled){background:var(--primary-hover)}
+.btn-primary:active:not(:disabled){background:var(--primary-active);transform:translateY(1px)}
+.btn-primary:disabled{opacity:.55;cursor:not-allowed}
+.btn-primary .spin{
+  width:14px;height:14px;border-radius:50%;
+  border:1.5px solid rgba(255,255,255,.35);border-top-color:#FFFFFF;
+  animation:spin .8s linear infinite;display:none;
+}
+.btn-primary[data-loading="true"] .spin{display:block}
+.btn-primary[data-loading="true"] .search-icon{display:none}
+
+
+/* ═══════════════════════════ Results card ═══════════════════════════ */
+.results-controls{
+  padding:12px 20px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.results-count{font-size:12.5px;color:var(--ink-3)}
+.results-count strong{color:var(--ink-2);font-weight:600}
+.sort-block{display:flex;align-items:center;gap:8px}
+.sort-block .lbl{font-size:12px;color:var(--ink-3)}
+.sort-block .select{
+  width:auto;min-width:140px;height:30px;font-size:12.5px;padding:0 28px 0 10px;
+}
+
+.job-list{display:flex;flex-direction:column;padding:6px 0}
+
+/* ═══════════════════════════ Job card ═══════════════════════════ */
+.job{
+  padding:14px 20px;
+  border-bottom:1px solid var(--border);
+  cursor:default;
+}
+.job:last-child{border-bottom:0}
+.job-head{
+  display:flex;gap:12px;align-items:flex-start;
+}
+.job-logo{
+  width:40px;height:40px;flex:none;border-radius:8px;
+  background:var(--surface-2);border:1px solid var(--border);
+  color:var(--ink-2);font-weight:600;font-size:15px;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.job-logo img{width:70%;height:70%;object-fit:contain;display:block}
+.job-main{flex:1;min-width:0}
+.job-title{
+  margin:0;font-size:14.5px;font-weight:600;color:var(--ink);
+  letter-spacing:-.005em;line-height:1.3;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.job-org{
+  font-size:12.5px;color:var(--ink-2);line-height:1.4;margin-top:2px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.job-org strong{color:var(--ink);font-weight:600}
+.job-meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.tag{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:11px;color:var(--ink-2);font-weight:500;
+  padding:2px 7px;border-radius:4px;
+  background:var(--surface-2);border:1px solid var(--border);line-height:1.5;
+}
+.tag.source{background:var(--primary-soft);color:var(--primary);border-color:transparent}
+.tag.salary{background:var(--ok-bg);color:var(--ok);border-color:transparent;font-weight:600}
+
+.job-side{
+  display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex:none;
+}
+.score-pill{
+  padding:4px 10px;border-radius:100px;font-size:12px;font-weight:600;
+  white-space:nowrap;line-height:1.3;
+}
+.score-pill.good{background:var(--ok-bg);color:var(--ok)}
+.score-pill.mid{background:var(--warn-bg);color:var(--warn)}
+.score-pill.low{background:var(--err-bg);color:var(--err)}
+.score-pill.na{background:var(--surface-3);color:var(--ink-3)}
+.job-posted{
+  font-size:11.5px;color:var(--ink-3);
+  display:flex;align-items:center;gap:4px;
+}
+.job-arrow{
+  color:var(--ink-3);text-decoration:none;
+  display:inline-flex;align-items:center;transition:color .12s, transform .12s;
+}
+.job-arrow:hover{color:var(--primary);text-decoration:none}
+.job-posted a.job-arrow:hover{transform:translateX(2px)}
+.apply-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:5px 11px;border-radius:var(--radius-sm);
+  background:var(--primary-soft);color:var(--primary);
+  border:1px solid var(--primary-line);
+  font-size:12px;font-weight:600;white-space:nowrap;
+  text-decoration:none;transition:background .12s, border-color .12s;
+  margin-top:2px;
+}
+.apply-btn:hover{background:var(--primary);color:#FFFFFF;text-decoration:none;border-color:var(--primary)}
+
+.expand-row{margin-top:12px}
+.expand-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 10px;border-radius:6px;
+  background:transparent;border:1px solid var(--border);
+  color:var(--ink-2);font-size:12px;font-weight:500;
+  transition:all .12s;
+}
+.expand-btn:hover{background:var(--surface-2);border-color:var(--border-2);color:var(--ink)}
+.expand-btn[aria-expanded="true"]{background:var(--primary-soft);color:var(--primary);border-color:var(--primary-line)}
+.expand-btn .chev{
+  width:8px;height:8px;
+  border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
+  transform:rotate(45deg);transition:transform .15s;margin-top:-2px;
+}
+.expand-btn[aria-expanded="true"] .chev{transform:rotate(-135deg);margin-top:2px}
+
+.expand-body{
+  margin-top:12px;padding:14px;border-radius:var(--radius);
+  background:var(--surface-2);border:1px solid var(--border);
+  display:none;
+}
+.expand-body.open{display:block}
+.exp-section{padding:12px 0;border-top:1px solid var(--border)}
+.exp-section:first-child{padding-top:0;border-top:0}
+.exp-title{
+  font-size:11px;font-weight:600;letter-spacing:.06em;
+  color:var(--ink-3);text-transform:uppercase;margin:0 0 8px;
+}
+.reason-box{
+  font-size:13px;color:var(--ink);line-height:1.55;
+  background:var(--surface);border-left:3px solid var(--primary);
+  padding:10px 12px;border-radius:0 6px 6px 0;
+}
+.subs{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media (min-width:640px){.subs{grid-template-columns:repeat(4,1fr)}}
+.sub{display:flex;flex-direction:column;gap:5px}
+.sub-k{font-size:11px;color:var(--ink-3);font-weight:500;letter-spacing:.02em}
+.sub-v{
+  display:flex;align-items:baseline;justify-content:space-between;gap:6px;
+  font-size:13.5px;color:var(--ink);font-weight:600;
+}
+.sub-v .verdict{font-size:10.5px;font-weight:500;color:var(--ink-3)}
+.sub-bar{height:3px;background:var(--surface-3);border-radius:2px;overflow:hidden}
+.sub-bar > i{display:block;height:100%;border-radius:2px;background:var(--ink-3)}
+.sub.good .sub-bar > i{background:var(--ok)}
+.sub.good .sub-v .verdict{color:var(--ok)}
+.sub.mid  .sub-bar > i{background:var(--warn)}
+.sub.mid  .sub-v .verdict{color:var(--warn)}
+.sub.low  .sub-bar > i{background:var(--err)}
+.sub.low  .sub-v .verdict{color:var(--err)}
+.sub.na .sub-v{color:var(--ink-3)}
+.sub.na .sub-bar > i{background:var(--ink-4);opacity:.4}
+.mlist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
+.mlist li{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;color:var(--ink);line-height:1.5}
+.mlist .mi{
+  flex:none;width:14px;height:14px;border-radius:3px;
+  display:flex;align-items:center;justify-content:center;margin-top:2px;
+  font-size:9.5px;font-weight:700;
+}
+.mlist.matches .mi{background:var(--ok-bg);color:var(--ok)}
+.mlist.gaps .mi{background:var(--err-bg);color:var(--err)}
+.kv{display:grid;grid-template-columns:140px 1fr;gap:6px 14px;font-size:12.5px;margin:0}
+@media (max-width:540px){.kv{grid-template-columns:1fr}}
+.kv dt{color:var(--ink-3);font-weight:500}
+.kv dd{margin:0;color:var(--ink);word-break:break-word}
+.kv dd a{color:var(--primary)}
+.skills-list{display:flex;flex-wrap:wrap;gap:4px}
+
+/* ═══════════════════════════ pagination ═══════════════════════════ */
+.pagination{
+  padding:12px 20px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  flex-wrap:wrap;background:var(--surface-2);
+  border-radius:0 0 var(--radius-lg) var(--radius-lg);
+}
+.page-info{font-size:12px;color:var(--ink-3)}
+.page-controls{display:flex;align-items:center;gap:4px}
+.pg-btn{
+  min-width:30px;height:30px;padding:0 8px;border-radius:6px;
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--ink-2);font-size:12.5px;font-weight:500;
+  display:inline-flex;align-items:center;justify-content:center;transition:all .12s;
+}
+.pg-btn:hover:not(:disabled){border-color:var(--primary-line);color:var(--primary)}
+.pg-btn:disabled{opacity:.4;cursor:not-allowed}
+.pg-btn.active{background:var(--primary);color:#FFFFFF;border-color:var(--primary)}
+
+/* ═══════════════════════════ empty / skeleton / error ═══════════════════════════ */
+.empty{
+  padding:56px 24px;text-align:center;
+}
+.empty h3{margin:0 0 6px;font-size:15px;font-weight:600;color:var(--ink)}
+.empty p{margin:0 auto;color:var(--ink-3);font-size:13.5px;max-width:40ch;line-height:1.55}
+.empty-icon{
+  width:52px;height:52px;border-radius:12px;
+  background:var(--primary-soft);color:var(--primary);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 14px;
+}
+.skel-row{padding:14px 20px;border-bottom:1px solid var(--border)}
+.sk{background:linear-gradient(90deg,#EEEBF1 0%,#F7F5F9 40%,#EEEBF1 80%);
+  background-size:200% 100%;animation:sk 1.4s ease-in-out infinite;border-radius:4px;display:block;}
+@keyframes sk{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+.results-err{padding:20px}
+
+/* ═══════════════════════════ page footer ═══════════════════════════ */
+footer.page-foot{
+  border-top:1px solid var(--border);padding:20px 0;margin-top:60px;
+  color:var(--ink-3);font-size:12px;
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ header ═══════════════════════════ -->
+<header class="app-header">
+  <div class="shell app-header-inner">
+    <div class="brand-block">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">J</span>
+        <span class="brand-name">JobFit</span>
+      </div>
+      <span class="brand-tag">Find the right jobs. Faster.</span>
+    </div>
+
+  </div>
+</header>
+
+<!-- ═══════════════════════════ main ═══════════════════════════ -->
+<main class="shell">
+
+  <div class="page-title-row">
+    <div class="page-title-block">
+      <h1>Resume-fit job search</h1>
+    </div>
+  </div>
+
+  <div class="ws">
+
+      <!-- ① Job titles -->
+      <section class="card" id="card-titles">
+        <div class="card-head">
+          <div class="card-head-l">
+            <span class="card-num" aria-hidden="true">1</span>
+            <h2 class="card-title">Job titles</h2>
+          </div>
+
+        </div>
+        <div class="card-body">
+
+          <div class="title-row">
+            <div class="field">
+              <label class="label" for="target_title">Target job title</label>
+              <input class="input" id="target_title" placeholder="e.g. AI Engineer" autocomplete="off" />
+            </div>
+            <button type="button" class="gen-btn" id="gen-btn">
+              <span class="spin" aria-hidden="true"></span>
+              <span class="icon" aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 20 20" fill="none"><path d="M10 2l1.8 4.2L16 8l-4.2 1.8L10 14l-1.8-4.2L4 8l4.2-1.8L10 2z" fill="currentColor"/></svg>
+              </span>
+              <span id="gen-label">Find Related Positions</span>
+            </button>
+          </div>
+
+          <div id="gen-status" role="status" aria-live="polite"></div>
+
+          <div class="subhead">
+            <span class="subhead-t">Suggested titles</span>
+            <span class="subhead-s" id="gen-sel-count"></span>
+          </div>
+          <div id="gen-titles-host"></div>
+
+          <div class="subhead">
+            <span class="subhead-t">Custom titles <span class="mut">(optional)</span></span>
+          </div>
+          <div class="custom-title-row">
+            <input class="input" id="custom-title-input" placeholder="Add a title we didn't suggest — press Enter or Add" autocomplete="off" />
+            <button type="button" class="mini-btn" id="custom-title-add">Add</button>
+          </div>
+          <div class="chip-list" id="custom-title-list"></div>
+
+        </div>
+        <div class="continue-foot" id="continue-foot">
+          <button type="button" class="btn-continue" id="continue-btn">
+            Continue to Job Search →
+          </button>
+        </div>
+      </section>
+
+      <!-- ② Resume -->
+      <section class="card" id="card-resume" hidden>
+        <div class="card-head">
+          <div class="card-head-l">
+            <span class="card-num" aria-hidden="true">2</span>
+            <h2 class="card-title">Resume</h2>
+          </div>
+
+        </div>
+        <div class="card-body">
+          <div class="drop" id="drop" tabindex="0" role="button" aria-label="Upload PDF resume">
+            <div class="drop-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 3.5A1.5 1.5 0 015.5 2h6L16 6.5v10A1.5 1.5 0 0114.5 18h-9A1.5 1.5 0 014 16.5v-13z" stroke="currentColor" stroke-width="1.4"/><path d="M11 2v4.5h5" stroke="currentColor" stroke-width="1.4"/></svg>
+            </div>
+            <div class="drop-body">
+              <div class="drop-title">Upload your resume (PDF)</div>
+              <div class="drop-sub">Drag &amp; drop a file or click to select · PDF only · Max 10 MB</div>
+            </div>
+            <button type="button" class="drop-cta">Choose file</button>
+            <input type="file" id="resume-input" accept="application/pdf,.pdf" hidden />
+          </div>
+          <div class="filed" id="filed" hidden>
+            <div class="filed-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M5 10.5l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="filed-body">
+              <div class="filed-name" id="filed-name"></div>
+              <div class="filed-meta" id="filed-meta"></div>
+            </div>
+            <button type="button" class="filed-x" id="filed-x" title="Remove" aria-label="Remove resume">×</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ③ Filters -->
+      <section class="card" id="card-filters" hidden>
+        <div class="card-head">
+          <div class="card-head-l">
+            <span class="card-num" aria-hidden="true">3</span>
+            <h2 class="card-title">Filters</h2>
+          </div>
+          <span class="card-hint">Narrow down your search (all optional)</span>
+        </div>
+
+        <div class="card-body">
+
+          <!-- Locations + Date -->
+          <div class="grid g2">
+            <div class="field">
+              <label class="label" for="loc-input">Locations</label>
+              <div class="loc-container" id="loc-container">
+                <input class="loc-inline-input" id="loc-input" placeholder="Add location, press Enter" autocomplete="off" />
+              </div>
+              <span style="font-size:11.5px;color:var(--ink-3);line-height:1.4;margin-top:2px;">Use full names, e.g. <em>India</em>, <em>United States</em>, <em>New York, United States</em></span>
+            </div>
+            <div class="field">
+              <label class="label">Date posted</label>
+              <div class="date-row" id="date-presets" role="radiogroup" aria-label="Date preset"></div>
+            </div>
+          </div>
+
+          <div id="date-custom" class="date-custom">
+            <div class="grid g2">
+              <div class="field">
+                <label class="label" for="date-gte">From</label>
+                <input type="date" class="input" id="date-gte" />
+              </div>
+              <div class="field">
+                <label class="label" for="date-lt">To</label>
+                <input type="date" class="input" id="date-lt" />
+              </div>
+            </div>
+            <div class="date-error" id="date-error"></div>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- Job filters -->
+          <div class="grid g4" id="job-filters"></div>
+
+          <div class="divider"></div>
+
+          <!-- Company filters -->
+          <div class="grid g4">
+            <div class="field">
+              <label class="label" for="ci-domain">
+                Include company domain
+                <span class="info-tip" title="Company domain like example.com — not company name">?</span>
+              </label>
+              <input class="input" id="ci-domain" placeholder="e.g. openai.com" autocomplete="off" />
+            </div>
+            <div class="field">
+              <label class="label" for="ci-ex-domain">
+                Exclude company domain
+                <span class="info-tip" title="Company domain to exclude">?</span>
+              </label>
+              <input class="input" id="ci-ex-domain" placeholder="e.g. consultantcies.com" autocomplete="off" />
+            </div>
+            <div class="field">
+              <label class="label" for="ci-headcount">Minimum company employees</label>
+              <input class="input num" type="number" min="0" step="1" id="ci-headcount" placeholder="e.g. 100" />
+            </div>
+            <div class="field">
+              <label class="label" for="ci-funding">
+                Min. funding (USD)
+                <span class="info-tip" title="Applies to ATS jobs only">?</span>
+              </label>
+              <input class="input num" type="number" min="0" step="1000000" id="ci-funding" placeholder="e.g. 10000000" />
+            </div>
+          </div>
+
+          <div class="grid g4" style="margin-top:12px">
+            <div class="field" style="grid-column: span 1">
+              <label class="label">Industry</label>
+              <div id="industry-inc-host"></div>
+              <div class="ms-chips" id="industry-inc-chips"></div>
+            </div>
+            <div class="field" style="grid-column: span 1">
+              <label class="label">Exclude industry</label>
+              <div id="industry-exc-host"></div>
+              <div class="ms-chips" id="industry-exc-chips"></div>
+            </div>
+            <div class="field">
+              <label class="label" style="opacity:0">.</label>
+              <div class="cbrow" id="cb-agency" role="checkbox" aria-checked="false" tabindex="0">
+                <span class="box" aria-hidden="true"></span>
+                <span class="lbl">Agency only</span>
+                <input type="checkbox" tabindex="-1" />
+              </div>
+            </div>
+            <div class="field">
+              <label class="label" style="opacity:0">.</label>
+              <div class="cbrow" id="cb-salary" role="checkbox" aria-checked="false" tabindex="0">
+                <span class="box" aria-hidden="true"></span>
+                <span class="lbl">Has salary info</span>
+                <input type="checkbox" tabindex="-1" />
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- Job Sources -->
+          <div class="field" style="max-width:320px">
+            <label class="label">Job sources</label>
+            <div class="source-toggle" id="source-toggle">
+              <button type="button" class="source-opt active" data-value="">ATS + Job Boards</button>
+              <button type="button" class="source-opt" data-value="linkedin,wellfound,ycombinator">ATS Only</button>
+            </div>
+          </div>
+
+          <div id="form-error" class="banner err" role="alert" hidden style="margin-top:16px">
+            <span class="banner-icon" aria-hidden="true">!</span>
+            <span id="form-error-msg"></span>
+          </div>
+
+        </div>
+
+        <div class="cta-foot">
+          <button class="btn-primary" id="submit" type="button" data-loading="false">
+            <span class="spin" aria-hidden="true"></span>
+            <span class="search-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.8"/><path d="M14 14l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+            <span id="submit-label">Search jobs</span>
+          </button>
+
+        </div>
+      </section>
+
+      <section class="card" id="card-results" aria-live="polite" hidden>
+        <div class="card-head">
+          <div class="card-head-l">
+            <span class="card-num" aria-hidden="true">4</span>
+            <h2 class="card-title">Job results</h2>
+          </div>
+          <span class="card-hint" id="results-count-badge"></span>
+        </div>
+        <div id="results-host"></div>
+      </section>
+
+  </div>
+
+</main>
+
+<footer class="page-foot shell">
+  <span>JobFit · resume-fit job search</span>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CONFIG
+   ═══════════════════════════════════════════════════════════════════════════ */
+const GENERATE_TITLES_URL = "https://n8n.leadfreak.co/webhook/title-suggestions";
+const SEARCH_URL          = "https://n8n.leadfreak.co/webhook/find-jobs";
+
+const PER_PAGE = 8;
+
+/* Job-filter option lists — values match Fantastic.jobs enums exactly */
+const OPTS = {
+  experience:{
+    label:"Experience",
+    hint:"API values: 0-2, 2-5, 5-10, 10+",
+    options:[
+      {value:"0-2",  label:"0-2"},
+      {value:"2-5",  label:"2-5"},
+      {value:"5-10", label:"5-10"},
+      {value:"10+",  label:"10+"},
+    ],
+  },
+  "employement-type":{
+    label:"Employment type",
+    hint:"Backend field name intentionally 'employement-type'",
+    options:[
+      {value:"FULL_TIME",  label:"FULL_TIME"},
+      {value:"PART_TIME",  label:"PART_TIME"},
+      {value:"CONTRACTOR", label:"CONTRACTOR"},
+      {value:"TEMPORARY",  label:"TEMPORARY"},
+      {value:"INTERN",     label:"INTERN"},
+      {value:"VOLUNTEER",  label:"VOLUNTEER"},
+      {value:"PER_DIEM",   label:"PER_DIEM"},
+    ],
+  },
+  "work-mode":{
+    label:"Work mode",
+    hint:"Fantastic.jobs work-arrangement values",
+    options:[
+      {value:"Remote Solely", label:"Remote Solely"},
+      {value:"Remote OK",     label:"Remote OK"},
+      {value:"Hybrid",        label:"Hybrid"},
+      {value:"On-site",       label:"On-site"},
+    ],
+  },
+  seniority:{
+    label:"Seniority",
+    hint:"LinkedIn seniority — job-board only",
+    options:[
+      {value:"Internship",       label:"Internship"},
+      {value:"Entry level",      label:"Entry level"},
+      {value:"Associate",        label:"Associate"},
+      {value:"Mid-Senior level", label:"Mid-Senior level"},
+      {value:"Director",         label:"Director"},
+      {value:"Executive",        label:"Executive"},
+      {value:"Not Applicable",   label:"Not Applicable"},
+    ],
+  },
+};
+
+/* Date presets — labels shown, values sent as `time_frame` in preset mode */
+const DATE_PRESETS = [
+  {value:"1h",     label:"Last 1 hour"},
+  {value:"24h",    label:"Last 24 hours"},
+  {value:"7d",     label:"Last 7 days"},
+  {value:"6m",     label:"Last 6 months"},
+  {value:"custom", label:"Custom"},
+];
+
+/* Full Fantastic.jobs industry list — preserved exactly */
+const INDUSTRIES = [
+  'Abrasives and Nonmetallic Minerals Manufacturing',
+  'Accessible Architecture and Design',
+  'Accessible Hardware Manufacturing',
+  'Accommodation and Food Services',
+  'Accounting',
+  'Administration of Justice',
+  'Administrative and Support Services',
+  'Advertising Services',
+  'Agricultural Chemical Manufacturing',
+  'Agriculture, Construction, Mining Machinery Manufacturing',
+  'Air, Water, and Waste Program Management',
+  'Airlines and Aviation',
+  'Alternative Dispute Resolution',
+  'Alternative Fuel Vehicle Manufacturing',
+  'Alternative Medicine',
+  'Ambulance Services',
+  'Amusement Parks and Arcades',
+  'Animal Feed Manufacturing',
+  'Animation',
+  'Animation and Post-production',
+  'Animation at Post-production',
+  'Apparel & Fashion',
+  'Apparel Manufacturing',
+  'Appliances, Electrical, and Electronics Manufacturing',
+  'Architectural and Structural Metal Manufacturing',
+  'Architecture and Planning',
+  'Armed Forces',
+  'Artificial Rubber and Synthetic Fiber Manufacturing',
+  'Artists and Writers',
+  'Arts & Crafts',
+  'Arts and Crafts',
+  'Audio and Video Equipment Manufacturing',
+  'Automation Machinery Manufacturing',
+  'Automotive',
+  'Aviation & Aerospace',
+  'Aviation and Aerospace Component Manufacturing',
+  'Baked Goods Manufacturing',
+  'Banking',
+  'Bars, Taverns, and Nightclubs',
+  'Bed-and-Breakfast, Hostel, Homestay',
+  'Bed-and-Breakfasts, Hostels, Homestays',
+  'Beverage Manufacturing',
+  'Biomass Electric Power Generation',
+  'Biotechnology',
+  'Biotechnology Research',
+  'Blockchain Services',
+  'Blogs',
+  'Boilers, Tanks, and Shipping Container Manufacturing',
+  'Book Publishing',
+  'Book and Periodical Publishing',
+  'Breweries',
+  'Broadcast Media Production and Distribution',
+  'Building Construction',
+  'Building Equipment Contractors',
+  'Building Finishing Contractors',
+  'Building Materials',
+  'Building Structure and Exterior Contractors',
+  'Business Consulting and Services',
+  'Business Content',
+  'Business Intelligence Platforms',
+  'Business Supplies & Equipment',
+  'Capital Markets',
+  'Caterers',
+  'Chemical Manufacturing',
+  'Chemical Raw Materials Manufacturing',
+  'Child Day Care Services',
+  'Chiropractors',
+  'Civic and Social Organizations',
+  'Civil Engineering',
+  'Claims Adjusting, Actuarial Services',
+  'Clay and Refractory Products Manufacturing',
+  'Climate Data and Analytics',
+  'Climate Technology Product Manufacturing',
+  'Coal Mining',
+  'Collection Agencies',
+  'Commercial Real Estate',
+  'Commercial and Industrial Equipment Rental',
+  'Commercial and Industrial Machinery Maintenance',
+  'Commercial and Service Industry Machinery Manufacturing',
+  'Communications Equipment Manufacturing',
+  'Community Development and Urban Planning',
+  'Community Services',
+  'Computer Games',
+  'Computer Hardware',
+  'Computer Hardware Manufacturing',
+  'Computer Networking',
+  'Computer Networking Products',
+  'Computer and Network Security',
+  'Computers and Electronics Manufacturing',
+  'Conservation Programs',
+  'Construction',
+  'Construction Hardware Manufacturing',
+  'Consumer Electronics',
+  'Consumer Goods',
+  'Consumer Goods Rental',
+  'Consumer Services',
+  'Correctional Institutions',
+  'Cosmetics',
+  'Cosmetology and Barber Schools',
+  'Courts of Law',
+  'Credit Intermediation',
+  'Custom Software Development ng IT System',
+  'Cutlery and Handtool Manufacturing',
+  'Dairy',
+  'Dairy Product Manufacturing',
+  'Dance Companies',
+  'Data Infrastructure and Analytics',
+  'Data Security Software Products',
+  'Defense & Space',
+  'Defense and Space Manufacturing',
+  'Dentists',
+  'Design Services',
+  'Desktop Computing Software Products',
+  'Digital Accessibility Services',
+  'Distilleries',
+  'E-Learning',
+  'E-Learning Providers',
+  'E-learning',
+  'Economic Programs',
+  'Education',
+  'Education Administration Programs',
+  'Education Management',
+  'Electric Lighting Equipment Manufacturing',
+  'Electric Power Generation',
+  'Electric Power Transmission, Control, and Distribution',
+  'Electrical Equipment Manufacturing',
+  'Electronic and Precision Equipment Maintenance',
+  'Embedded Software Products',
+  'Emergency and Relief Services',
+  'Engineering Services',
+  'Engines and Power Transmission Equipment Manufacturing',
+  'Entertainment Providers',
+  'Environmental Quality Programs',
+  'Environmental Services',
+  'Equipment Rental Services',
+  'Events Services',
+  'Executive Offices',
+  'Executive Search Services',
+  'Fabricated Metal Products',
+  'Facilities Services',
+  'Family Planning Centers',
+  'Farming',
+  'Farming, Ranching, Forestry',
+  'Fashion Accessories Manufacturing',
+  'Financial Services',
+  'Fine Art',
+  'Fine Arts Schools',
+  'Fire Protection',
+  'Fisheries',
+  'Flight Training',
+  'Food & Beverages',
+  'Food and Beverage Manufacturing',
+  'Food and Beverage Retail',
+  'Food and Beverage Services',
+  'Footwear Manufacturing',
+  'Footwear and Leather Goods Repair',
+  'Forestry and Logging',
+  'Fossil Fuel Electric Power Generation',
+  'Freight and Package Transportation',
+  'Fruit and Vegetable Preserves Manufacturing',
+  'Fuel Cell Manufacturing',
+  'Fundraising',
+  'Furniture',
+  'Furniture and Home Furnishings Manufacturing',
+  'Gambling Facilities and Casinos',
+  'Geothermal Electric Power Generation',
+  'Glass Product Manufacturing',
+  'Glass, Ceramics and Concrete Manufacturing',
+  'Golf Courses and Country Clubs',
+  'Government Administration',
+  'Government Relations',
+  'Government Relations Services',
+  'Graphic Design',
+  'Ground Passenger Transportation',
+  'HVAC and Refrigeration Equipment Manufacturing',
+  'Headhunting',
+  'Health and Human Services',
+  'Health, Wellness & Fitness',
+  'Health, Wellness and Fitness',
+  'Higher Education',
+  'Highway, Street, and Bridge Construction',
+  'Historical Sites',
+  'Holding Companies',
+  'Home Health Care Services',
+  'Horticulture',
+  'Hospitality',
+  'Hospitals',
+  'Hospitals and Health Care',
+  'Hotels and Motels',
+  'Household Appliance Manufacturing',
+  'Household Services',
+  'Household and Institutional Furniture Manufacturing',
+  'Housing Programs',
+  'Housing and Community Development',
+  'Human Resources',
+  'Human Resources Services',
+  'Human resources',
+  'Hydroelectric Power Generation',
+  'IT Services and IT Consulting',
+  'IT System Custom Software Development',
+  'IT System Data Services',
+  'IT System Design Services',
+  'IT System Installation and Disposal',
+  'IT System Operations and Maintenance',
+  'IT System Testing and Evaluation',
+  'IT System Training and Support',
+  'Import & Export',
+  'Import at Export',
+  'Individual and Family Services',
+  'Industrial Automation',
+  'Industrial Machinery Manufacturing',
+  'Industry Associations',
+  'Information Services',
+  'Information Technology & Services',
+  'Information Technology and Services',
+  'Insurance',
+  'Insurance Agencies and Brokerages',
+  'Insurance Carriers',
+  'Insurance and Employee Benefit Funds',
+  'Interior Design',
+  'Interior design',
+  'International Affairs',
+  'International Trade and Development',
+  'International Trade at Development',
+  'Internet Marketplace Platforms',
+  'Internet News',
+  'Internet Publishing',
+  'Interurban and Rural Bus Services',
+  'Investment Advice',
+  'Investment Banking',
+  'Investment Management',
+  'Janitorial Services',
+  'Landscaping Services',
+  'Language Schools',
+  'Laundry and Drycleaning Services',
+  'Law Enforcement',
+  'Law Practice',
+  'Leasing Non-residential Real Estate',
+  'Leasing Real Estat Nonhunian',
+  'Leasing Residential Real Estate',
+  'Leasing ng Non-residential Real Estate',
+  'Leather Product Manufacturing',
+  'Legal Services',
+  'Legislative Offices',
+  'Leisure, Travel & Tourism',
+  'Libraries',
+  'Lime and Gypsum Products Manufacturing',
+  'Loan Brokers',
+  'Luxury Goods & Jewelry',
+  'Machinery Manufacturing',
+  'Magnetic and Optical Media Manufacturing',
+  'Manufacturing',
+  'Maritime',
+  'Maritime Transportation',
+  'Market Research',
+  'Marketing Services',
+  'Mattress and Blinds Manufacturing',
+  'Measuring and Control Instrument Manufacturing',
+  'Mechanical Or Industrial Engineering',
+  'Mechanical or Industrial Engineering',
+  'Media Production',
+  'Media and Telecommunications',
+  'Medical Device',
+  'Medical Devices',
+  'Medical Equipment Manufacturing',
+  'Medical Practices',
+  'Medical and Diagnostic Laboratories',
+  'Mental Health Care',
+  'Metal Ore Mining',
+  'Metal Treatments',
+  'Metal Valve, Ball, and Roller Manufacturing',
+  'Metalworking Machinery Manufacturing',
+  'Mga Bed-and-Breakfast, Hostel, Homestay',
+  'Mga Entertainment Provider',
+  'Mga Internet Marketplace Platform',
+  'Mga Philanthropic Fundraising Service',
+  'Military and International Affairs',
+  'Mobile Computing Software Products',
+  'Mobile Food Services',
+  'Mobile Gaming Apps',
+  'Motor Vehicle Manufacturing',
+  'Motor Vehicle Parts Manufacturing',
+  'Movies and Sound Recording',
+  'Movies, Videos, and Sound',
+  'Museums',
+  'Museums, Historical Sites, and Zoos',
+  'Music',
+  'Musicians',
+  'Nanotechnology Research',
+  'Natural Gas Distribution',
+  'Natural Gas Extraction',
+  'Newspaper Publishing',
+  'Non-profit Organization Management',
+  'Non-profit Organizations',
+  'Nonmetallic Mineral Mining',
+  'Nonprofit Organization Management',
+  'Nonresidential Building Construction',
+  'Nuclear Electric Power Generation',
+  'Nursing Homes and Residential Care Facilities',
+  'Office Administration',
+  'Office Furniture and Fixtures Manufacturing',
+  'Oil Extraction',
+  'Oil and Coal Product Manufacturing',
+  'Oil and Gas',
+  'Oil, Gas, and Mining',
+  'Online Audio and Video Media',
+  'Online Audio at Video Media',
+  'Online Media',
+  'Online and Mail Order Retail',
+  'Operations Consulting',
+  'Operations management consulting',
+  'Optometrists',
+  'Outpatient Care Centers',
+  'Outsourcing & Offshoring',
+  'Outsourcing and Offshoring Consulting',
+  'Outsourcing/Offshoring',
+  'Packaging & Containers',
+  'Packaging and Containers Manufacturing',
+  'Paint, Coating, and Adhesive Manufacturing',
+  'Paper & Forest Products',
+  'Paper and Forest Product Manufacturing',
+  'Pension Funds',
+  'Performing Arts and Spectator Sports',
+  'Periodical Publishing',
+  'Personal Care Product Manufacturing',
+  'Personal Care Services',
+  'Personal and Laundry Services',
+  'Pet Services',
+  'Pharmaceutical Manufacturing',
+  'Philanthropic Fundraising Services',
+  'Philanthropy',
+  'Photography',
+  'Physical, Occupational and Speech Therapists',
+  'Physicians',
+  'Pipeline Transportation',
+  'Plastics Manufacturing',
+  'Plastics and Rubber Product Manufacturing',
+  'Political Organizations',
+  'Postal Services',
+  'Primary Metal Manufacturing',
+  'Primary and Secondary Education',
+  'Printing Services',
+  'Professional Organizations',
+  'Professional Services',
+  'Professional Training and Coaching',
+  'Program Development',
+  'Public Assistance Programs',
+  'Public Health',
+  'Public Policy',
+  'Public Policy Offices',
+  'Public Relations and Communications Services',
+  'Public Safety',
+  'Racetracks',
+  'Radio and Television Broadcasting',
+  'Rail Transportation',
+  'Railroad Equipment Manufacturing',
+  'Ranching',
+  'Ranching and Fisheries',
+  'Real Estate',
+  'Real Estate Agents and Brokers',
+  'Real Estate and Equipment Rental Services',
+  'Recreational Facilities',
+  'Regenerative Design',
+  'Religious Institutions',
+  'Renewable Energy Equipment Manufacturing',
+  'Renewable Energy Power Generation',
+  'Renewable Energy Semiconductor Manufacturing',
+  'Renewables & Environment',
+  'Repair and Maintenance',
+  'Research',
+  'Research Services',
+  'Residential Building Construction',
+  'Restaurants',
+  'Retail',
+  'Retail Apparel and Fashion',
+  'Retail Appliances, Electrical, and Electronic Equipment',
+  'Retail Art Dealers',
+  'Retail Art Supplies',
+  'Retail Books and Printed News',
+  'Retail Building Materials and Garden Equipment',
+  'Retail Florists',
+  'Retail Furniture and Home Furnishings',
+  'Retail Gasoline',
+  'Retail Groceries',
+  'Retail Health and Personal Care Products',
+  'Retail Luxury Goods and Jewelry',
+  'Retail Motor Vehicles',
+  'Retail Musical Instruments',
+  'Retail Office Equipment',
+  'Retail Office Supplies and Gifts',
+  'Retail Pharmacies',
+  'Retail Recyclable Materials & Used Merchandise',
+  'Retail ng Online at Mail Order',
+  'Reupholstery and Furniture Repair',
+  'Robot Manufacturing',
+  'Robotics Engineering',
+  'Robotics engineering',
+  'Rubber Products Manufacturing',
+  'Satellite Telecommunications',
+  'School and Employee Bus Services',
+  'Seafood Product Manufacturing',
+  'Secretarial Schools',
+  'Securities and Commodity Exchanges',
+  'Security Guards and Patrol Services',
+  'Security Systems Services',
+  'Security and Investigations',
+  'Semiconductor Manufacturing',
+  'Semiconductors',
+  'Services for Renewable Energy',
+  'Services for the Elderly and Disabled',
+  'Sheet Music Publishing',
+  'Shipbuilding',
+  'Shuttles and Special Needs Transportation Services',
+  'Sightseeing Transportation',
+  'Skiing Facilities',
+  'Smart Meter Manufacturing',
+  'Soap and Cleaning Product Manufacturing',
+  'Social Networking Platforms',
+  'Software Development',
+  'Solar Electric Power Generation',
+  'Sound Recording',
+  'Space Research and Technology',
+  'Specialty Trade Contractors',
+  'Spectator Sports',
+  'Sporting Goods',
+  'Sporting Goods Manufacturing',
+  'Sports Teams and Clubs',
+  'Sports and Recreation Instruction',
+  'Spring and Wire Product Manufacturing',
+  'Staffing and Recruiting',
+  'Staffing at Recruiting',
+  'Steam and Air-Conditioning Supply',
+  'Strategic Management Services',
+  'Subdivision of Land',
+  'Sugar and Confectionery Product Manufacturing',
+  'Surveying and Mapping Services',
+  'Taxi and Limousine Services',
+  'Technical and Vocational Training',
+  'Technology, Information and Internet',
+  'Technology, Information and Media',
+  'Telecommunications',
+  'Telecommunications Carriers',
+  'Telephone Call Centers',
+  'Temporary Help Services',
+  'Textile Manufacturing',
+  'Theater Companies',
+  'Think Tanks',
+  'Think tank',
+  'Think tanks',
+  'Tobacco',
+  'Tobacco Manufacturing',
+  'Translation and Localization',
+  'Transportation Equipment Manufacturing',
+  'Transportation Programs',
+  'Transportation, Logistics, Supply Chain and Storage',
+  'Transportation/Trucking/Railroad',
+  'Travel Arrangements',
+  'Truck Transportation',
+  'Trusts and Estates',
+  'Turned Products and Fastener Manufacturing',
+  'Urban Transit Services',
+  'Utilities',
+  'Utilities Administration',
+  'Utility System Construction',
+  'Vehicle Repair and Maintenance',
+  'Venture Capital and Private Equity Principals',
+  'Veterinary',
+  'Veterinary Services',
+  'Vocational Rehabilitation Services',
+  'Warehousing',
+  'Warehousing and Storage',
+  'Warehousing at Storage',
+  'Waste Collection',
+  'Waste Treatment and Disposal',
+  'Water Supply and Irrigation Systems',
+  'Water, Waste, Steam, and Air Conditioning Services',
+  'Wellness and Fitness Services',
+  'Wholesale',
+  'Wholesale Alcoholic Beverages',
+  'Wholesale Apparel and Sewing Supplies',
+  'Wholesale Appliances, Electrical, and Electronics',
+  'Wholesale Building Materials',
+  'Wholesale Chemical and Allied Products',
+  'Wholesale Computer Equipment',
+  'Wholesale Drugs and Sundries',
+  'Wholesale Food and Beverage',
+  'Wholesale Footwear',
+  'Wholesale Furniture and Home Furnishings',
+  'Wholesale Hardware, Plumbing, Heating Equipment',
+  'Wholesale Import and Export',
+  'Wholesale Luxury Goods and Jewelry',
+  'Wholesale Machinery',
+  'Wholesale Metals and Minerals',
+  'Wholesale Motor Vehicles and Parts',
+  'Wholesale Paper Products',
+  'Wholesale Petroleum and Petroleum Products',
+  'Wholesale Photography Equipment and Supplies',
+  'Wholesale Raw Farm Products',
+  'Wholesale Recyclable Materials',
+  'Wholesale ng Machinery',
+  'Wind Electric Power Generation',
+  'Wine & Spirits',
+  'Wine at Spirits',
+  'Wineries',
+  'Wireless Services',
+  "Women's Handbag Manufacturing",
+  'Wood Product Manufacturing',
+  'Writing and Editing',
+  'Zoos and Botanical Gardens',
+];
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   STATE — per-page, per-session. No globals leak between users.
+   ═══════════════════════════════════════════════════════════════════════════ */
+const state = {
+  selections:{
+    experience:new Set(),
+    "work-mode":new Set(),
+    "employement-type":new Set(),
+    seniority:new Set(),
+    organization_industry:new Set(),
+    exclude_organization_industry:new Set(),
+  },
+  generatedTitles: [],
+  selectedGenerated: new Set(),
+  customTitles: [],
+  locations: [],
+  dateMode: "preset",
+  timeFrame: "7d",
+  dateGte: "",
+  dateLt: "",
+  agencyOnly: false,
+  hasSalary: false,
+  excludeSource: "",
+  genLoading: false,
+  searchLoading: false,
+  lastResults: null,
+  lastCtx: null,
+  sort: "newest",   // "newest" | "relevance" | "newest_relevance" — DEFAULT = newest
+  page: 1,
+  genReqId: 0,
+  searchReqId: 0,
+};
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   UTILITIES
+   ═══════════════════════════════════════════════════════════════════════════ */
+const $  = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>Array.from(r.querySelectorAll(s));
+const esc = s => String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const bytes = n => n<1024?`${n} B`:n<1024*1024?`${(n/1024).toFixed(1)} KB`:`${(n/1048576).toFixed(2)} MB`;
+const numOrNull = x => { const n=Number(x); return Number.isFinite(n)?n:null; };
+const todayISO = ()=> new Date().toISOString().slice(0,10);
+
+function timeAgo(iso){
+  if(!iso) return "";
+  const t = new Date(iso).getTime();
+  if(isNaN(t)) return "";
+  const now = Date.now();
+  const s = Math.floor((now - t) / 1000);
+  if(s < 45)      return "just now";
+  if(s < 90)      return "1 min ago";
+  if(s < 3600)    return `${Math.floor(s/60)} min ago`;
+  if(s < 5400)    return "1 hour ago";
+  if(s < 86400)   return `${Math.floor(s/3600)} hours ago`;
+  const d = Math.floor(s / 86400);
+  if(d === 1)     return "1 day ago";
+  if(d < 7)       return `${d} days ago`;
+  if(d < 14)      return "1 week ago";
+  if(d < 30)      return `${Math.floor(d/7)} weeks ago`;
+  if(d < 60)      return "1 month ago";
+  if(d < 365)     return `${Math.floor(d/30)} months ago`;
+  if(d < 730)     return "1 year ago";
+  return `${Math.floor(d/365)} years ago`;
+}
+
+function closeAllMenus(except){
+  $$(".ms-menu.open").forEach(m=>{ if(m!==except) m.classList.remove("open"); });
+}
+document.addEventListener("keydown", e=>{
+  if(e.key==="Escape") closeAllMenus(null);
+});
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MULTI-SELECT (small fixed lists — job filters)
+   ═══════════════════════════════════════════════════════════════════════════ */
+function mountMultiSelect(fieldKey){
+  const def = OPTS[fieldKey];
+  const wrap = document.createElement("div");
+  wrap.className = "field";
+  wrap.innerHTML = `
+    <div class="label">
+      ${esc(def.label)}
+      <span class="info-tip" title="${esc(def.hint)}">?</span>
+    </div>
+    <div class="ms">
+      <button type="button" class="ms-trigger" aria-haspopup="listbox" aria-expanded="false">
+        <span class="val placeholder">Any</span>
+        <span class="chev" aria-hidden="true"></span>
+      </button>
+      <div class="ms-menu" role="listbox" aria-multiselectable="true"></div>
+    </div>`;
+  const trigger = $(".ms-trigger", wrap);
+  const menu = $(".ms-menu", wrap);
+  const valEl = $(".val", trigger);
+
+  const allRow = document.createElement("div");
+  allRow.className = "ms-option";
+  allRow.setAttribute("role","option");
+  allRow.setAttribute("aria-selected","false");
+  allRow.innerHTML = `<span class="ms-check" aria-hidden="true"></span><span>Select all</span>`;
+  allRow.addEventListener("click", e=>{
+    e.stopPropagation();
+    const sel = state.selections[fieldKey];
+    const values = def.options.map(o=>o.value);
+    const allOn = values.every(v=>sel.has(v));
+    if(allOn) values.forEach(v=>sel.delete(v));
+    else values.forEach(v=>sel.add(v));
+    syncRows(); renderTrigger();
+  });
+  menu.appendChild(allRow);
+  const div = document.createElement("div"); div.className="ms-divider";
+  menu.appendChild(div);
+
+  const rows = [];
+  def.options.forEach(opt=>{
+    const row = document.createElement("div");
+    row.className = "ms-option";
+    row.setAttribute("role","option");
+    row.setAttribute("aria-selected","false");
+    row.dataset.value = opt.value;
+    row.innerHTML = `<span class="ms-check" aria-hidden="true"></span><span>${esc(opt.label)}</span>`;
+    row.addEventListener("click", e=>{
+      e.stopPropagation();
+      const sel = state.selections[fieldKey];
+      if(sel.has(opt.value)) sel.delete(opt.value); else sel.add(opt.value);
+      row.setAttribute("aria-selected", sel.has(opt.value)?"true":"false");
+      syncAll(); renderTrigger();
+    });
+    menu.appendChild(row);
+    rows.push({row, value:opt.value});
+  });
+
+  function syncRows(){
+    const sel = state.selections[fieldKey];
+    rows.forEach(({row,value})=>row.setAttribute("aria-selected", sel.has(value)?"true":"false"));
+    syncAll();
+  }
+  function syncAll(){
+    const sel = state.selections[fieldKey];
+    const all = def.options.every(o=>sel.has(o.value));
+    allRow.setAttribute("aria-selected", all?"true":"false");
+  }
+  function renderTrigger(){
+    const sel = state.selections[fieldKey];
+    valEl.classList.toggle("placeholder", sel.size===0);
+    if(sel.size===0){ valEl.textContent = "Any"; return; }
+    if(sel.size===def.options.length){ valEl.textContent = "All"; return; }
+    if(sel.size <= 2){
+      valEl.textContent = def.options.filter(o=>sel.has(o.value)).map(o=>o.label).join(", ");
+    } else {
+      valEl.textContent = `${sel.size} selected`;
+    }
+  }
+  trigger.addEventListener("click", e=>{
+    e.stopPropagation();
+    const open = menu.classList.toggle("open");
+    trigger.setAttribute("aria-expanded", open?"true":"false");
+    closeAllMenus(menu);
+  });
+  document.addEventListener("click", e=>{
+    if(!wrap.contains(e.target)){
+      menu.classList.remove("open");
+      trigger.setAttribute("aria-expanded","false");
+    }
+  });
+  return wrap;
+}
+
+const jobFiltersHost = $("#job-filters");
+["experience","employement-type","work-mode","seniority"].forEach(k=>{
+  jobFiltersHost.appendChild(mountMultiSelect(k));
+});
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SEARCHABLE MULTI-SELECT for the 509-item industry list, with chip row below
+   ═══════════════════════════════════════════════════════════════════════════ */
+function mountIndustryMultiSelect(fieldKey, hostEl, chipHostEl){
+  const wrap = document.createElement("div");
+  wrap.className = "ms";
+  wrap.innerHTML = `
+    <button type="button" class="ms-trigger" aria-haspopup="listbox" aria-expanded="false">
+      <span class="val placeholder">Select industries</span>
+      <span class="chev" aria-hidden="true"></span>
+    </button>
+    <div class="ms-menu" role="listbox" aria-multiselectable="true">
+      <div class="ms-search-wrap">
+        <input class="ms-search" type="text" placeholder="Search industries…" aria-label="Search industries" />
+      </div>
+      <div class="ms-count">Showing 509 industries</div>
+      <div class="ms-body"></div>
+    </div>`;
+
+  const trigger = $(".ms-trigger", wrap);
+  const menu = $(".ms-menu", wrap);
+  const searchInput = $(".ms-search", wrap);
+  const body = $(".ms-body", wrap);
+  const valEl = $(".val", trigger);
+
+  let query = "";
+
+  function renderBody(){
+    body.innerHTML = "";
+    const q = query.trim().toLowerCase();
+    const matches = q ? INDUSTRIES.filter(i => i.toLowerCase().includes(q)) : INDUSTRIES;
+    // Show all industries; searching simply filters the full list.
+    const shown = matches;
+
+    if(matches.length === 0){
+      const empty = document.createElement("div");
+      empty.className = "ms-empty";
+      empty.textContent = "No industries match your search.";
+      body.appendChild(empty);
+      return;
+    }
+    const sel = state.selections[fieldKey];
+    shown.forEach(label => {
+      const row = document.createElement("div");
+      row.className = "ms-option";
+      row.setAttribute("role","option");
+      row.setAttribute("aria-selected", sel.has(label)?"true":"false");
+      row.innerHTML = `<span class="ms-check" aria-hidden="true"></span><span>${esc(label)}</span>`;
+      row.addEventListener("click", e=>{
+        e.stopPropagation();
+        if(sel.has(label)) sel.delete(label); else sel.add(label);
+        row.setAttribute("aria-selected", sel.has(label)?"true":"false");
+        renderTrigger();
+        renderChips();
+      });
+      body.appendChild(row);
+    });
+  }
+  function renderTrigger(){
+    const sel = state.selections[fieldKey];
+    valEl.classList.toggle("placeholder", sel.size===0);
+    if(sel.size === 0){ valEl.textContent = "Select industries"; return; }
+    valEl.textContent = `${sel.size} selected`;
+  }
+  function renderChips(){
+    chipHostEl.innerHTML = "";
+    const sel = [...state.selections[fieldKey]];
+    sel.forEach(label => {
+      const chip = document.createElement("span");
+      chip.className = "chip-sm";
+      chip.innerHTML = `<span>${esc(label)}</span><button type="button" class="x" aria-label="Remove ${esc(label)}">×</button>`;
+      chip.querySelector(".x").addEventListener("click", ()=>{
+        state.selections[fieldKey].delete(label);
+        renderTrigger();
+        renderChips();
+        renderBody();
+      });
+      chipHostEl.appendChild(chip);
+    });
+  }
+
+  searchInput.addEventListener("input", ()=>{ query = searchInput.value; renderBody(); });
+  searchInput.addEventListener("click", e=>e.stopPropagation());
+
+  trigger.addEventListener("click", e=>{
+    e.stopPropagation();
+    const open = menu.classList.toggle("open");
+    trigger.setAttribute("aria-expanded", open?"true":"false");
+    closeAllMenus(menu);
+    if(open){ renderBody(); setTimeout(()=>searchInput.focus(), 0); }
+  });
+  document.addEventListener("click", e=>{
+    if(!wrap.contains(e.target)){
+      menu.classList.remove("open");
+      trigger.setAttribute("aria-expanded","false");
+    }
+  });
+  hostEl.appendChild(wrap);
+}
+
+mountIndustryMultiSelect(
+  "organization_industry",
+  $("#industry-inc-host"),
+  $("#industry-inc-chips")
+);
+mountIndustryMultiSelect(
+  "exclude_organization_industry",
+  $("#industry-exc-host"),
+  $("#industry-exc-chips")
+);
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CHECKBOX ROWS (agency / has_salary)
+   ═══════════════════════════════════════════════════════════════════════════ */
+function bindCbRow(id, stateKey){
+  const el = $(id);
+  const box = el.querySelector("input");
+  function set(v){
+    el.classList.toggle("on", !!v);
+    el.setAttribute("aria-checked", v ? "true" : "false");
+    box.checked = !!v;
+    state[stateKey] = !!v;
+  }
+  el.addEventListener("click", ()=> set(!state[stateKey]));
+  el.addEventListener("keydown", e=>{
+    if(e.key===" " || e.key==="Enter"){ e.preventDefault(); set(!state[stateKey]); }
+  });
+  set(false);
+}
+bindCbRow("#cb-agency", "agencyOnly");
+bindCbRow("#cb-salary", "hasSalary");
+
+/* Job Source toggle */
+$$(".source-opt", $("#source-toggle")).forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    state.excludeSource = btn.dataset.value;
+    $$(".source-opt", $("#source-toggle")).forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TITLE GENERATION
+   ═══════════════════════════════════════════════════════════════════════════ */
+const genBtn        = $("#gen-btn");
+const genLabel      = $("#gen-label");
+const genStatus     = $("#gen-status");
+const genTitlesHost = $("#gen-titles-host");
+const genSelCount   = $("#gen-sel-count");
+const targetInput   = $("#target_title");
+
+function setGenLoading(v){
+  state.genLoading = v;
+  genBtn.disabled = v;
+  genBtn.dataset.loading = v ? "true":"false";
+  genLabel.textContent = v ? "Finding positions…" : "Find Related Positions";
+}
+
+async function generateTitles(){
+  const t = targetInput.value.trim();
+  if(!t){
+    genStatus.innerHTML = `<div class="banner warn" style="margin-top:10px"><span class="banner-icon">!</span><span>Enter a target job title first.</span></div>`;
+    return;
+  }
+  genStatus.innerHTML = "";
+  setGenLoading(true);
+  const reqId = ++state.genReqId;
+  try{
+    const res = await fetch(GENERATE_TITLES_URL, {
+      method:"POST",
+      mode:"cors",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ target_title: t }),
+    });
+    if(!res.ok) throw new Error(`server ${res.status}`);
+    const data = await res.json();
+    if(reqId !== state.genReqId) return;
+
+    let titles = null;
+    if(Array.isArray(data)) titles = data;
+    else if(data && Array.isArray(data.titles)) titles = data.titles;
+    else if(data && typeof data.titles === "string"){
+      try{ titles = JSON.parse(data.titles); }catch{ titles = null; }
+    }
+    if(!Array.isArray(titles)) throw new Error("bad shape");
+
+    const seen = new Set(); const cleaned = [];
+    titles.forEach(t=>{
+      if(typeof t !== "string") return;
+      const v = t.trim();
+      if(!v || seen.has(v)) return;
+      seen.add(v); cleaned.push(v);
+    });
+    state.generatedTitles = cleaned;
+    state.selectedGenerated = new Set();  // per spec: UNSELECTED BY DEFAULT
+    renderGeneratedTitles();
+  }catch(err){
+    if(reqId !== state.genReqId) return;
+    genStatus.innerHTML = `<div class="banner err" style="margin-top:10px"><span class="banner-icon">!</span><span>Unable to generate title variations. Please try again.</span></div>`;
+  }finally{
+    if(reqId === state.genReqId) setGenLoading(false);
+  }
+}
+genBtn.addEventListener("click", generateTitles);
+targetInput.addEventListener("keydown", e=>{
+  if(e.key==="Enter"){ e.preventDefault(); generateTitles(); }
+});
+
+/* Continue to Job Search */
+const continueBtn = $("#continue-btn");
+if(continueBtn){
+  continueBtn.addEventListener("click", ()=>{
+    const resumeCard  = $("#card-resume");
+    const filtersCard = $("#card-filters");
+    const resultsCard = $("#card-results");
+    // Reveal resume, filters, results
+    if(resumeCard)  resumeCard.hidden  = false;
+    if(filtersCard) filtersCard.hidden = false;
+    if(resultsCard) resultsCard.hidden = false;
+    // Scroll to resume card smoothly
+    if(resumeCard) resumeCard.scrollIntoView({ behavior:"smooth", block:"start" });
+    // Hide the continue footer so it doesn't distract further
+    const foot = $("#continue-foot");
+    if(foot) foot.classList.remove("visible");
+  });
+}
+
+function syncSelectAllBtn(){
+  const n = state.generatedTitles.length;
+  const allOn = n > 0 && state.selectedGenerated.size === n;
+  const btn = $("#select-all-btn");
+  if(btn) btn.textContent = allOn ? "Deselect All" : "Select All";
+}
+
+function renderGeneratedTitles(){
+  if(!state.generatedTitles.length){
+    genTitlesHost.innerHTML = `<div class="title-list-empty">Click <strong>Find Related Positions</strong> to see suggested titles based on your target role.</div>`;
+    genSelCount.textContent = "";
+    return;
+  }
+  const n = state.generatedTitles.length;
+
+  // Build: select-all row + grid
+  genTitlesHost.innerHTML = `
+    <div class="select-all-row">
+      <span class="subhead-s" id="sel-count-inline"></span>
+      <button type="button" class="select-all-btn" id="select-all-btn">Select All</button>
+    </div>
+    <div class="title-grid" id="gen-toggle-list"></div>`;
+
+  function refreshCount(){
+    const cnt = state.selectedGenerated.size;
+    genSelCount.textContent = `Select the titles you want to search · ${cnt} / ${n} selected`;
+    const inline = $("#sel-count-inline");
+    if(inline) inline.textContent = `${cnt} / ${n} selected`;
+    syncSelectAllBtn();
+  }
+
+  const host = $("#gen-toggle-list");
+  state.generatedTitles.forEach(title=>{
+    const on = state.selectedGenerated.has(title);
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "title-check";
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+    btn.innerHTML = `<span class="box" aria-hidden="true"></span><span class="lbl">${esc(title)}</span>`;
+    btn.addEventListener("click", ()=>{
+      if(state.selectedGenerated.has(title)) state.selectedGenerated.delete(title);
+      else state.selectedGenerated.add(title);
+      btn.setAttribute("aria-pressed", state.selectedGenerated.has(title) ? "true" : "false");
+      refreshCount();
+    });
+    host.appendChild(btn);
+  });
+
+  // Select All / Deselect All handler
+  const saBtn = $("#select-all-btn");
+  saBtn.addEventListener("click", ()=>{
+    const allOn = state.selectedGenerated.size === n;
+    if(allOn){
+      state.selectedGenerated.clear();
+    } else {
+      state.generatedTitles.forEach(t => state.selectedGenerated.add(t));
+    }
+    // Sync all title-check buttons
+    $$(".title-check", host).forEach(btn=>{
+      const title = btn.querySelector(".lbl").textContent;
+      btn.setAttribute("aria-pressed", state.selectedGenerated.has(title) ? "true" : "false");
+    });
+    refreshCount();
+  });
+
+  refreshCount();
+
+  // Show the "Continue to Job Search" footer now that titles are available
+  const foot = $("#continue-foot");
+  if(foot) foot.classList.add("visible");
+}
+renderGeneratedTitles();
+
+/* Custom titles */
+const customInput = $("#custom-title-input");
+const customAddBtn = $("#custom-title-add");
+const customList = $("#custom-title-list");
+
+function addCustomTitle(){
+  const v = customInput.value.trim();
+  if(!v) return;
+  if(state.customTitles.includes(v) || state.selectedGenerated.has(v)) {
+    customInput.value = "";
+    return;
+  }
+  state.customTitles.push(v);
+  customInput.value = "";
+  renderCustomTitles();
+}
+customAddBtn.addEventListener("click", addCustomTitle);
+customInput.addEventListener("keydown", e=>{
+  if(e.key==="Enter"){ e.preventDefault(); addCustomTitle(); }
+});
+function renderCustomTitles(){
+  customList.innerHTML = "";
+  state.customTitles.forEach((t, i)=>{
+    const chip = document.createElement("span");
+    chip.className = "chip";
+    chip.innerHTML = `<span>${esc(t)}</span><button type="button" class="x" aria-label="Remove ${esc(t)}">×</button>`;
+    chip.querySelector(".x").addEventListener("click", ()=>{
+      state.customTitles.splice(i, 1);
+      renderCustomTitles();
+    });
+    customList.appendChild(chip);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESUME UPLOAD
+   ═══════════════════════════════════════════════════════════════════════════ */
+const drop        = $("#drop");
+const resumeInput = $("#resume-input");
+const filedRow    = $("#filed");
+const filedName   = $("#filed-name");
+const filedMeta   = $("#filed-meta");
+const filedX      = $("#filed-x");
+const dropCta     = $(".drop-cta", drop);
+
+function refreshDropUI(){
+  const f = resumeInput.files && resumeInput.files[0];
+  if(f){
+    filedRow.hidden = false;
+    filedName.textContent = f.name;
+    filedMeta.textContent = bytes(f.size);
+  } else {
+    filedRow.hidden = true;
+    filedName.textContent = "";
+    filedMeta.textContent = "";
+  }
+}
+drop.addEventListener("click", e=>{ if(e.target===filedX) return; resumeInput.click(); });
+drop.addEventListener("keydown", e=>{
+  if(e.key==="Enter" || e.key===" "){ e.preventDefault(); resumeInput.click(); }
+});
+dropCta.addEventListener("click", e=>{ e.stopPropagation(); resumeInput.click(); });
+filedX.addEventListener("click", e=>{ e.stopPropagation(); resumeInput.value = ""; refreshDropUI(); });
+resumeInput.addEventListener("change", ()=>{
+  const f = resumeInput.files[0];
+  if(f && f.type!=="application/pdf" && !f.name.toLowerCase().endsWith(".pdf")){
+    showFormError("That file isn't a PDF. Please upload your resume as a PDF.");
+    resumeInput.value = ""; refreshDropUI(); return;
+  }
+  if(f && f.size > 10*1024*1024){
+    showFormError("The resume is larger than 10 MB. Please compress or shorten it.");
+    resumeInput.value = ""; refreshDropUI(); return;
+  }
+  clearFormError(); refreshDropUI();
+});
+["dragenter","dragover"].forEach(ev=>drop.addEventListener(ev, e=>{
+  e.preventDefault(); drop.classList.add("drag");
+}));
+["dragleave","drop"].forEach(ev=>drop.addEventListener(ev, e=>{
+  e.preventDefault(); drop.classList.remove("drag");
+}));
+drop.addEventListener("drop", e=>{
+  const f = e.dataTransfer.files && e.dataTransfer.files[0];
+  if(!f) return;
+  const dt = new DataTransfer();
+  dt.items.add(f);
+  resumeInput.files = dt.files;
+  resumeInput.dispatchEvent(new Event("change"));
+});
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LOCATIONS — chips inline in the container
+   ═══════════════════════════════════════════════════════════════════════════ */
+const locInput = $("#loc-input");
+const locContainer = $("#loc-container");
+
+function addLocation(v){
+  v = String(v || "").trim();
+  if(!v) return;
+  if(state.locations.some(l => l.toLowerCase() === v.toLowerCase())){
+    locInput.value = "";
+    return;
+  }
+  state.locations.push(v);
+  locInput.value = "";
+  renderLocations();
+}
+locInput.addEventListener("keydown", e=>{
+  if(e.key==="Enter"){ e.preventDefault(); addLocation(locInput.value); }
+  else if(e.key==="Backspace" && locInput.value==="" && state.locations.length){
+    state.locations.pop(); renderLocations();
+  }
+});
+locInput.addEventListener("blur", ()=>{
+  if(locInput.value.trim()) addLocation(locInput.value);
+});
+locContainer.addEventListener("click", e=>{
+  if(e.target === locContainer) locInput.focus();
+});
+
+function renderLocations(){
+  // Remove all existing chips (preserve the input node)
+  $$(".chip", locContainer).forEach(c => c.remove());
+  // Rebuild chips before the input
+  state.locations.forEach((l, i)=>{
+    const chip = document.createElement("span");
+    chip.className = "chip";
+    chip.innerHTML = `<span>${esc(l)}</span><button type="button" class="x" aria-label="Remove ${esc(l)}">×</button>`;
+    chip.querySelector(".x").addEventListener("click", (e)=>{
+      e.stopPropagation();
+      state.locations.splice(i, 1);
+      renderLocations();
+    });
+    locContainer.insertBefore(chip, locInput);
+  });
+}
+renderLocations();
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DATE FILTER
+   ═══════════════════════════════════════════════════════════════════════════ */
+const datePresetsHost = $("#date-presets");
+const dateCustom = $("#date-custom");
+const dateGteInput = $("#date-gte");
+const dateLtInput  = $("#date-lt");
+const dateErrorEl  = $("#date-error");
+
+DATE_PRESETS.forEach(p=>{
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "date-preset";
+  btn.textContent = p.label;
+  btn.dataset.value = p.value;
+  btn.setAttribute("role", "radio");
+  btn.setAttribute("aria-pressed", "false");
+  btn.addEventListener("click", ()=>selectDatePreset(p.value));
+  datePresetsHost.appendChild(btn);
+});
+
+function selectDatePreset(v){
+  $$(".date-preset", datePresetsHost).forEach(el=>{
+    el.setAttribute("aria-pressed", el.dataset.value === v ? "true" : "false");
+  });
+  if(v === "custom"){
+    state.dateMode = "custom";
+    state.timeFrame = "";
+    dateCustom.classList.add("open");
+  } else {
+    state.dateMode = "preset";
+    state.timeFrame = v;
+    state.dateGte = "";
+    state.dateLt = "";
+    dateGteInput.value = "";
+    dateLtInput.value = "";
+    dateCustom.classList.remove("open");
+    hideDateError();
+  }
+}
+selectDatePreset("7d"); // default
+
+dateLtInput.max = todayISO();
+dateGteInput.max = todayISO();
+
+dateGteInput.addEventListener("change", ()=>{ state.dateGte = dateGteInput.value; validateCustomDates(); });
+dateLtInput.addEventListener("change", ()=>{ state.dateLt = dateLtInput.value; validateCustomDates(); });
+
+function showDateError(msg){ dateErrorEl.textContent = msg; dateErrorEl.classList.add("show"); }
+function hideDateError(){ dateErrorEl.textContent = ""; dateErrorEl.classList.remove("show"); }
+function validateCustomDates(){
+  hideDateError();
+  if(state.dateMode !== "custom") return true;
+  if(!state.dateGte || !state.dateLt) return true;
+  const g = new Date(state.dateGte + "T00:00:00Z");
+  const l = new Date(state.dateLt + "T00:00:00Z");
+  const now = new Date(todayISO() + "T00:00:00Z");
+  if(g > l){ showDateError("From date must be on or before To date."); return false; }
+  if(l > now){ showDateError("To date can't be in the future."); return false; }
+  const days = Math.round((l - g) / 86400000);
+  if(days > 186){ showDateError("Custom range can't exceed 6 months."); return false; }
+  return true;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FORM ERROR HELPERS
+   ═══════════════════════════════════════════════════════════════════════════ */
+function showFormError(msg){
+  const el = $("#form-error");
+  $("#form-error-msg").textContent = msg;
+  el.hidden = false;
+  el.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+function clearFormError(){ $("#form-error").hidden = true; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SUBMIT — MAIN JOB SEARCH
+   ═══════════════════════════════════════════════════════════════════════════ */
+const submitBtn = $("#submit");
+const submitLabel = $("#submit-label");
+submitBtn.addEventListener("click", handleSubmit);
+
+async function handleSubmit(){
+  if(state.searchLoading) return;
+  clearFormError();
+
+  const target_title = targetInput.value.trim();
+  const selected     = [...state.selectedGenerated];
+  const custom       = state.customTitles.slice();
+  const file         = resumeInput.files && resumeInput.files[0];
+
+  if(!target_title){ showFormError("Enter a target job title before searching."); return; }
+  if(selected.length === 0 && custom.length === 0){
+    showFormError("Select at least one suggested title or add a custom title.");
+    return;
+  }
+  if(!file){ showFormError("Upload your resume (PDF) so we can score jobs against it."); return; }
+  if(state.dateMode === "custom"){
+    if(!state.dateGte || !state.dateLt){
+      showFormError("Choose both From and To dates for the custom range.");
+      return;
+    }
+    if(!validateCustomDates()){
+      showFormError("Fix the custom date range before searching.");
+      return;
+    }
+  }
+
+  const fd = new FormData();
+  fd.append("resume", file, file.name);
+  fd.append("target_title", target_title);
+  fd.append("selected_titles", JSON.stringify(selected));
+  fd.append("custom_titles",   JSON.stringify(custom));
+  fd.append("locations",       JSON.stringify(state.locations));
+  fd.append("mode",            state.dateMode);
+  if(state.dateMode === "preset"){
+    fd.append("time_frame",       state.timeFrame);
+    fd.append("date_posted_gte",  "");
+    fd.append("date_posted_lt",   "");
+  } else {
+    fd.append("time_frame",       "");
+    // Convert user-selected dates to full ISO timestamps.
+    // date_posted_gte: start of the From date (inclusive).
+    // date_posted_lt:  start of the day AFTER the To date, so jobs posted
+    //                  anywhere on the To date are included.
+    const gteISO = state.dateGte + "T00:00:00Z";
+    const ltDay  = new Date(state.dateLt + "T00:00:00Z");
+    ltDay.setUTCDate(ltDay.getUTCDate() + 1);
+    const ltISO  = ltDay.toISOString().slice(0, 10) + "T00:00:00Z";
+    fd.append("date_posted_gte",  gteISO);
+    fd.append("date_posted_lt",   ltISO);
+  }
+  fd.append("experience",       [...state.selections["experience"]].join(","));
+  fd.append("work-mode",        [...state.selections["work-mode"]].join(","));
+  fd.append("employement-type", [...state.selections["employement-type"]].join(","));
+  fd.append("seniority",        [...state.selections["seniority"]].join(","));
+  fd.append("domain",           $("#ci-domain").value.trim());
+  fd.append("exclude_domain",   $("#ci-ex-domain").value.trim());
+  fd.append("organization_industry",         [...state.selections["organization_industry"]].join(","));
+  fd.append("exclude_organization_industry", [...state.selections["exclude_organization_industry"]].join(","));
+  fd.append("organization_headcount_gte",    $("#ci-headcount").value.trim());
+  fd.append("organization_funding_gte",      $("#ci-funding").value.trim());
+  fd.append("organization_agency",           state.agencyOnly ? "true" : "");
+  fd.append("has_salary",                    state.hasSalary  ? "true" : "");
+  fd.append("exclude_source",                 state.excludeSource);
+
+  setSearchLoading(true);
+  renderSkeleton();
+  state.lastCtx = { target_title, titles: [...selected, ...custom] };
+  state.page = 1;
+
+  const reqId = ++state.searchReqId;
+  let res, data;
+  try{
+    res = await fetch(SEARCH_URL, { method:"POST", body:fd, mode:"cors" });
+  }catch{
+    if(reqId !== state.searchReqId) return;
+    setSearchLoading(false);
+    renderError("Unable to reach the search server. Check your connection and try again.");
+    return;
+  }
+  if(reqId !== state.searchReqId) return;
+  if(!res.ok){
+    setSearchLoading(false);
+    renderError(friendlyHttpError(res.status));
+    return;
+  }
+  try{ data = await res.json(); }
+  catch{
+    setSearchLoading(false);
+    renderError("Unable to load jobs right now. Please try again.");
+    return;
+  }
+  if(reqId !== state.searchReqId) return;
+
+  let jobs;
+  if(Array.isArray(data)){ jobs = data; }
+  else if(data && Array.isArray(data.jobs)){ jobs = data.jobs; }
+  else {
+    setSearchLoading(false);
+    renderError("Unable to load jobs right now. Please try again.");
+    return;
+  }
+  state.lastResults = jobs;
+  renderResults();
+  setSearchLoading(false);
+}
+
+function friendlyHttpError(status){
+  if(status===404) return "The search service isn't reachable right now.";
+  if(status===401 || status===403) return "The server rejected the request.";
+  if(status===413) return "The resume file is too large for the server to accept.";
+  if(status===429) return "The search service is rate-limited right now. Please wait a bit and retry.";
+  if(status>=500) return "Unable to load jobs right now. Please try again.";
+  return "Unable to load jobs right now. Please try again.";
+}
+function setSearchLoading(v){
+  state.searchLoading = v;
+  submitBtn.disabled = v;
+  submitBtn.dataset.loading = v ? "true":"false";
+  submitLabel.textContent = v ? "Finding and scoring matching jobs…" : "Search jobs";
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESULTS RENDERING
+   ═══════════════════════════════════════════════════════════════════════════ */
+const resultsHost = $("#results-host");
+const resultsCountBadge = $("#results-count-badge");
+
+function renderInitial(){
+  resultsCountBadge.textContent = "";
+  resultsHost.innerHTML = `
+    <div class="empty">
+      <div class="empty-icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.6"/><path d="M14 14l3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </div>
+      <h3>Ready when you are</h3>
+      <p>Configure your search on the left, then click <strong>Search jobs</strong>. Ranked results will appear here.</p>
+    </div>`;
+}
+renderInitial();
+
+function renderSkeleton(){
+  resultsCountBadge.textContent = "";
+  const rows = Array.from({length:4}).map(()=>`
+    <div class="skel-row">
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <span class="sk" style="width:40px;height:40px;border-radius:8px;flex:none"></span>
+        <div style="flex:1">
+          <span class="sk" style="height:14px;width:60%"></span>
+          <span class="sk" style="height:11px;width:40%;margin-top:6px"></span>
+          <div style="display:flex;gap:4px;margin-top:8px">
+            <span class="sk" style="height:16px;width:60px;border-radius:4px"></span>
+            <span class="sk" style="height:16px;width:70px;border-radius:4px"></span>
+            <span class="sk" style="height:16px;width:60px;border-radius:4px"></span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+          <span class="sk" style="height:20px;width:70px;border-radius:100px"></span>
+          <span class="sk" style="height:10px;width:60px"></span>
+        </div>
+      </div>
+    </div>`).join("");
+  resultsHost.innerHTML = `<div class="job-list">${rows}</div>`;
+}
+
+function renderError(msg){
+  resultsCountBadge.textContent = "";
+  resultsHost.innerHTML = `<div class="results-err">
+    <div class="banner err"><span class="banner-icon">!</span><span>${esc(msg)}</span></div>
+  </div>`;
+}
+
+function renderResults(){
+  const jobs = state.lastResults || [];
+  const count = jobs.length;
+
+  if(count === 0){
+    resultsCountBadge.textContent = "0 results";
+    resultsHost.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.6"/><path d="M6 9h6M14 14l3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <h3>No matches this time</h3>
+        <p>Try broadening the location, removing a filter, or widening the date range.</p>
+      </div>`;
+    return;
+  }
+
+  const sorted = sortJobs(jobs, state.sort);
+  const pages = Math.max(1, Math.ceil(sorted.length / PER_PAGE));
+  if(state.page > pages) state.page = 1;
+  const start = (state.page - 1) * PER_PAGE;
+  const end = Math.min(sorted.length, start + PER_PAGE);
+  const pageJobs = sorted.slice(start, end);
+
+  resultsCountBadge.textContent = `${count} result${count===1?"":"s"}`;
+  resultsHost.innerHTML = `
+    <div class="results-controls">
+      <span class="results-count">Showing <strong>${start + 1}–${end}</strong> of ${count}</span>
+      <div class="sort-block">
+        <span class="lbl">Sort by</span>
+        <select class="select" id="sort-select">
+          <option value="newest"            ${state.sort==="newest"            ? "selected":""}>Newest</option>
+          <option value="relevance"         ${state.sort==="relevance"         ? "selected":""}>Relevance</option>
+          <option value="newest_relevance"  ${state.sort==="newest_relevance"  ? "selected":""}>Newest + Relevance</option>
+        </select>
+      </div>
+    </div>
+    <div class="job-list" id="job-list"></div>
+    <div class="pagination" id="pagination"></div>`;
+
+  const host = $("#job-list");
+  pageJobs.forEach((j, idx) => host.appendChild(renderJobCard(j, start + idx)));
+
+  renderPagination(pages);
+
+  $("#sort-select").addEventListener("change", e=>{
+    state.sort = e.target.value;
+    state.page = 1;
+    renderResults();
+  });
+}
+
+function renderPagination(pages){
+  const wrap = $("#pagination");
+  if(pages <= 1){ wrap.style.display = "none"; return; }
+  wrap.style.display = "flex";
+
+  const controls = document.createElement("div");
+  controls.className = "page-controls";
+
+  const prev = document.createElement("button");
+  prev.className = "pg-btn";
+  prev.textContent = "‹";
+  prev.disabled = state.page <= 1;
+  prev.addEventListener("click", ()=>{ state.page--; renderResults(); });
+  controls.appendChild(prev);
+
+  // Simple 1..N with ellipsis handling (basic form)
+  const range = [];
+  for(let i=1; i<=pages; i++) range.push(i);
+  const compact = pages > 7 ? compactPages(state.page, pages) : range;
+  compact.forEach(n=>{
+    if(n === "…"){
+      const el = document.createElement("span");
+      el.textContent = "…";
+      el.style.padding = "0 4px";
+      el.style.color = "var(--ink-3)";
+      controls.appendChild(el);
+      return;
+    }
+    const btn = document.createElement("button");
+    btn.className = "pg-btn" + (n === state.page ? " active" : "");
+    btn.textContent = String(n);
+    btn.addEventListener("click", ()=>{ state.page = n; renderResults(); });
+    controls.appendChild(btn);
+  });
+
+  const next = document.createElement("button");
+  next.className = "pg-btn";
+  next.textContent = "›";
+  next.disabled = state.page >= pages;
+  next.addEventListener("click", ()=>{ state.page++; renderResults(); });
+  controls.appendChild(next);
+
+  const info = document.createElement("span");
+  info.className = "page-info";
+  info.textContent = `Page ${state.page} of ${pages}`;
+
+  wrap.innerHTML = "";
+  wrap.appendChild(info);
+  wrap.appendChild(controls);
+}
+function compactPages(cur, total){
+  const out = [1];
+  if(cur > 3) out.push("…");
+  for(let i = Math.max(2, cur-1); i <= Math.min(total-1, cur+1); i++) out.push(i);
+  if(cur < total-2) out.push("…");
+  out.push(total);
+  return out;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SORTING — default = newest; alternatives = relevance and newest + relevance
+   ═══════════════════════════════════════════════════════════════════════════ */
+function jobPostedTime(j){
+  const cands = ["date_posted","posted_at","published_at","date_created","created_at"];
+  for(const k of cands){
+    if(j[k]){
+      const d = new Date(j[k]);
+      if(!isNaN(d.getTime())) return d.getTime();
+    }
+  }
+  return null;
+}
+function sortJobs(jobs, mode){
+  if(mode === "relevance"){
+    return jobs.slice().sort((a,b)=>{
+      const av = numOrNull(a.relevance_score);
+      const bv = numOrNull(b.relevance_score);
+      if(av==null && bv==null) return 0;
+      if(av==null) return 1;
+      if(bv==null) return -1;
+      return bv - av;
+    });
+  }
+
+  if(mode === "newest_relevance"){
+    // True combined ranking: 70% relevance + 30% recency.
+    // Recency uses an exponential decay so newer jobs get a higher score,
+    // while relevance remains the stronger signal.
+    const now = Date.now();
+    const recencyScore = (job) => {
+      const t = jobPostedTime(job);
+      if(t == null) return null;
+      const ageHours = Math.max(0, (now - t) / 3600000);
+      return 100 * Math.exp(-ageHours / 72); // ~37 at 72h, ~10 at 1 week
+    };
+
+    return jobs.slice().sort((a,b)=>{
+      const ar = numOrNull(a.relevance_score);
+      const br = numOrNull(b.relevance_score);
+      const at = recencyScore(a);
+      const bt = recencyScore(b);
+
+      // If relevance is missing, rank it using recency only.
+      const ac = ar == null
+        ? (at == null ? null : at)
+        : (at == null ? ar : (0.70 * ar + 0.30 * at));
+      const bc = br == null
+        ? (bt == null ? null : bt)
+        : (bt == null ? br : (0.70 * br + 0.30 * bt));
+
+      if(ac==null && bc==null) return 0;
+      if(ac==null) return 1;
+      if(bc==null) return -1;
+      if(bc !== ac) return bc - ac;
+
+      // Stable tie-breaker: newest first.
+      const atime = jobPostedTime(a);
+      const btime = jobPostedTime(b);
+      if(atime==null && btime==null) return 0;
+      if(atime==null) return 1;
+      if(btime==null) return -1;
+      return btime - atime;
+    });
+  }
+
+  // newest — DEFAULT
+  return jobs.slice().sort((a,b)=>{
+    const at = jobPostedTime(a);
+    const bt = jobPostedTime(b);
+    if(at==null && bt==null) return 0;
+    if(at==null) return 1;
+    if(bt==null) return -1;
+    return bt - at;
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SCORING BANDS / FIELD PICKING / CARD RENDER
+   ═══════════════════════════════════════════════════════════════════════════ */
+function scoreBand(n){
+  if(n==null) return {cls:"na", label:"Not scored"};
+  if(n>=75) return {cls:"good", label:"Strong match"};
+  if(n>=55) return {cls:"mid",  label:"Partial match"};
+  return {cls:"low", label:"Low match"};
+}
+function subBand(n){
+  if(n==null) return {cls:"na", verdict:"—"};
+  if(n>=75) return {cls:"good", verdict:"Strong"};
+  if(n>=55) return {cls:"mid",  verdict:"Partial"};
+  return {cls:"low", verdict:"Low"};
+}
+
+function pickJobFields(j){
+  return {
+    title: j.title || j.job_title || j.name || "Untitled role",
+    company: j.organization || j.company || j.company_name || j.employer_name || j.org || "",
+    url: j.url || j.job_url || j.apply_url || j.link || j.source_url || "",
+    source: j.source || j.source_type || j.ats || j.job_board || "",
+    employment: j.employment_type || j.ai_employment_type || j.employmentType || j.job_type || "",
+    workMode: j.work_arrangement || j.ai_work_arrangement || j.workplace_type || j.remote || "",
+    experience: j.experience_level || j.ai_experience_level || j.seniority_level || "",
+    seniority: j.linkedin_seniority || j.seniority || "",
+    posted: j.posted_at || j.date_posted || j.published_at || j.posted || "",
+    description: j.description_text || j.description || j.job_description || j.summary || "",
+    location: pickLocation(j),
+    salary: pickSalary(j),
+    skills: j.skills || j.ai_key_skills || j.key_skills || null,
+    visa: j.visa_sponsored ?? j.visa_sponsorship ?? j.ai_visa_sponsorship ?? null,
+    recruiterName:  j.recruiter_name  || j.recruiter?.name         || j.poster_name   || j.hiring_manager_name  || "",
+    recruiterTitle: j.recruiter_title || j.recruiter?.title        || j.recruiter?.role || j.poster_title        || "",
+    recruiterUrl:   j.recruiter_url   || j.recruiter?.profile_url  || j.recruiter?.url  || j.poster_url          || "",
+    orgUrl: j.organization_url || j.company_url || j.employer_website || "",
+    industry: j.organization_industry || j.industry || "",
+    headcount: j.organization_headcount || j.employee_count || "",
+    funding: j.organization_funding || j.funding_total || "",
+  };
+}
+function pickLocation(j){
+  const cands = [j.locations_derived, j.locations, j.location, j.job_location, j.cities_derived, j.city, j.country];
+  for(const c of cands){
+    if(!c) continue;
+    if(Array.isArray(c)) return c.filter(Boolean).join(" · ");
+    if(typeof c==="string") return c;
+    if(typeof c==="object"){
+      const parts=[c.city,c.region,c.country].filter(Boolean);
+      if(parts.length) return parts.join(", ");
+    }
+  }
+  return "";
+}
+function pickSalary(j){
+  const min = j.salary_min ?? j.min_salary ?? j.salary_raw?.min ?? j.compensation_min;
+  const max = j.salary_max ?? j.max_salary ?? j.salary_raw?.max ?? j.compensation_max;
+  const cur = j.salary_currency || j.currency || j.salary_raw?.currency || "";
+  const per = j.salary_period || j.pay_period || j.salary_raw?.period || "";
+  if(min || max){
+    const fmt = n => n==null?"":Number(n).toLocaleString();
+    const range = min && max ? `${fmt(min)}–${fmt(max)}` : fmt(min || max);
+    return [cur, range, per].filter(Boolean).join(" ");
+  }
+  const sal = j.salary;
+  if(!sal) return "";
+  if(typeof sal === "string") return sal;
+  // j.salary is an object — extract min/max/currency from it
+  const sMin = sal.min ?? sal.from ?? null;
+  const sMax = sal.max ?? sal.to   ?? null;
+  const sCur = sal.currency || "";
+  const sPer = sal.period || sal.frequency || "";
+  if(sMin || sMax){
+    const fmt = n => n==null?"":Number(n).toLocaleString();
+    const range = sMin && sMax ? `${fmt(sMin)}–${fmt(sMax)}` : fmt(sMin||sMax);
+    return [sCur, range, sPer].filter(Boolean).join(" ");
+  }
+  return "";
+}
+
+function attachLogo(el, company, orgUrl){
+  const initial = ((company || "?").trim()[0] || "?").toUpperCase();
+  el.textContent = initial;
+  if(!orgUrl) return;
+  try{
+    const u = new URL(orgUrl.startsWith("http") ? orgUrl : "https://" + orgUrl);
+    const src = `https://www.google.com/s2/favicons?domain=${u.hostname}&sz=128`;
+    const img = new Image();
+    img.decoding = "async";
+    img.referrerPolicy = "no-referrer";
+    img.alt = "";
+    img.addEventListener("load", ()=>{
+      // Some favicon endpoints return a generic 16px placeholder on failure;
+      // if the image is very small we ignore it. Otherwise swap in.
+      if(img.naturalWidth >= 24){
+        el.textContent = "";
+        el.appendChild(img);
+      }
+    });
+    img.src = src;
+  }catch{}
+}
+
+function renderJobCard(job, idx){
+  const f = pickJobFields(job);
+  const rel = numOrNull(job.output?.relevance_score ?? job.relevance_score);
+  const band = scoreBand(rel);
+
+  const subs = [
+    {k:"Experience",     v:numOrNull(job.output?.experience_match ?? job.experience_match)},
+    {k:"Skills",         v:numOrNull(job.output?.skills_match ?? job.skills_match)},
+    {k:"Qualifications", v:numOrNull(job.output?.qualifications_match ?? job.qualifications_match)},
+    {k:"Functional",     v:numOrNull(job.output?.functional_match ?? job.functional_match)},
+  ];
+  const matches = Array.isArray(job.output?.key_matches) ? job.output.key_matches : (Array.isArray(job.key_matches) ? job.key_matches : []);
+  const gaps    = Array.isArray(job.output?.key_gaps)    ? job.output.key_gaps    : (Array.isArray(job.key_gaps)    ? job.key_gaps    : []);
+  const posted  = timeAgo(f.posted);
+
+  const tags = [];
+  if(f.employment) tags.push(`<span class="tag">${esc(f.employment)}</span>`);
+  if(f.seniority)  tags.push(`<span class="tag">${esc(f.seniority)}</span>`);
+  if(f.workMode)   tags.push(`<span class="tag">${esc(f.workMode)}</span>`);
+  if(f.experience && !f.seniority) tags.push(`<span class="tag">${esc(f.experience)}</span>`);
+  if(f.source)     tags.push(`<span class="tag source">via ${esc(f.source)}</span>`);
+  if(f.salary)     tags.push(`<span class="tag salary">${esc(f.salary)}</span>`);
+
+  const skillsHTML = Array.isArray(f.skills)
+    ? f.skills.slice(0,50).map(s=>`<span class="tag">${esc(s)}</span>`).join("")
+    : (f.skills ? esc(String(f.skills)) : "");
+
+  const orgLine = f.location
+    ? `${f.company ? `<strong>${esc(f.company)}</strong>` : ""}${f.company ? " · " : ""}${esc(f.location)}`
+    : (f.company ? `<strong>${esc(f.company)}</strong>` : "");
+
+  const scoreText = rel==null ? "Not scored" : `${rel}% match`;
+
+  const kvRows = [
+    ["Company",  f.company ? (f.orgUrl?`<a href="${esc(f.orgUrl)}" target="_blank" rel="noopener">${esc(f.company)}</a>`:esc(f.company)) : ""],
+    ["Location", esc(f.location)],
+    ["Employment type", esc(f.employment)],
+    ["Work mode", esc(f.workMode)],
+    ["Experience level", esc(f.experience)],
+    ["LinkedIn seniority", esc(f.seniority)],
+    ["Source", esc(f.source)],
+    ["Posted", esc(f.posted)],
+    ["Salary", esc(f.salary)],
+    ["Industry", esc(f.industry)],
+    ["Employees", esc(f.headcount)],
+    ["Funding", esc(f.funding)],
+    ["Visa sponsorship", f.visa==null?"":(f.visa===true||f.visa==="true"?"Yes":f.visa===false||f.visa==="false"?"No":esc(String(f.visa)))],
+    ["Job URL",  f.url?`<a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.url)}</a>`:""],
+  ].filter(([,v])=>v).map(([k,v])=>`<dt>${esc(k)}</dt><dd>${v}</dd>`).join("");
+
+  const card = document.createElement("article");
+  card.className = "job";
+  card.innerHTML = `
+    <div class="job-head">
+      <div class="job-logo" aria-hidden="true"></div>
+      <div class="job-main">
+        <h3 class="job-title">${esc(f.title)}</h3>
+        <p class="job-org">${orgLine}</p>
+        <div class="job-meta">${tags.join("")}</div>
+        <div class="expand-row">
+          <button type="button" class="expand-btn" aria-expanded="false" aria-controls="exp-${idx}">
+            <span>Match details</span>
+            <span class="chev" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+      <div class="job-side">
+        <span class="score-pill ${band.cls}">${esc(scoreText)}</span>
+        ${posted ? `<span class="job-posted">${esc(posted)}</span>` : ""}
+        ${f.url
+          ? `<a class="apply-btn" href="${esc(f.url)}" target="_blank" rel="noopener">View job ↗</a>`
+          : ""}
+      </div>
+    </div>
+    <div class="expand-body" id="exp-${idx}">
+      ${(job.output?.reason ?? job.reason) ? `
+        <div class="exp-section">
+          <h4 class="exp-title">Why this matched (${band.label.toLowerCase()})</h4>
+          <div class="reason-box">${esc(job.output?.reason ?? job.reason)}</div>
+        </div>` : ""}
+
+      <div class="exp-section">
+        <h4 class="exp-title">Match breakdown</h4>
+        <div class="subs">
+          ${subs.map(s=>{
+            const b = subBand(s.v);
+            const pct = s.v==null ? 0 : Math.max(0,Math.min(100,s.v));
+            return `
+              <div class="sub ${b.cls}">
+                <span class="sub-k">${esc(s.k)}</span>
+                <span class="sub-v"><span>${s.v==null?"—":s.v}</span><span class="verdict">${esc(b.verdict)}</span></span>
+                <span class="sub-bar" aria-hidden="true"><i style="width:${pct}%"></i></span>
+              </div>`;
+          }).join("")}
+        </div>
+      </div>
+
+      ${matches.length ? `
+      <div class="exp-section">
+        <h4 class="exp-title">Key matches</h4>
+        <ul class="mlist matches">
+          ${matches.map(m=>`<li><span class="mi" aria-hidden="true">✓</span><span>${esc(m)}</span></li>`).join("")}
+        </ul>
+      </div>` : ""}
+
+      ${gaps.length ? `
+      <div class="exp-section">
+        <h4 class="exp-title">Key gaps</h4>
+        <ul class="mlist gaps">
+          ${gaps.map(g=>`<li><span class="mi" aria-hidden="true">−</span><span>${esc(g)}</span></li>`).join("")}
+        </ul>
+      </div>` : ""}
+
+      ${(()=>{
+        const rn = f.recruiterName;
+        const rt = f.recruiterTitle;
+        const ru = f.recruiterUrl;
+        const hasAny = rn || rt || ru;
+        return `<div class="exp-section">
+          <h4 class="exp-title">Recruiter</h4>
+          <div class="recruiter-block">
+            ${hasAny ? `
+              ${rn ? `<div class="recruiter-name">${esc(rn)}</div>` : ""}
+              ${rt ? `<div class="recruiter-title">${esc(rt)}</div>` : ""}
+              ${ru ? `<a class="recruiter-link" href="${esc(ru)}" target="_blank" rel="noopener">View profile →</a>` : ""}
+            ` : `<span class="recruiter-na">Recruiter information not available</span>`}
+          </div>
+        </div>`;
+      })()}
+
+      ${f.description ? `
+      <details style="border-top:1px solid var(--border);padding-top:10px;margin-top:10px">
+        <summary style="cursor:pointer;font-size:11.5px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;list-style:none">Job description ▾</summary>
+        <p style="margin:10px 0 0;white-space:pre-wrap;font-size:12.5px;color:var(--ink-2);line-height:1.55">${esc(f.description).slice(0,2400)}${f.description.length>2400?"…":""}</p>
+      </details>` : ""}
+
+      ${skillsHTML ? `
+      <details style="border-top:1px solid var(--border);padding-top:10px;margin-top:10px">
+        <summary style="cursor:pointer;font-size:11.5px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;list-style:none">Skills mentioned ▾</summary>
+        <div style="margin-top:10px" class="skills-list">${skillsHTML}</div>
+      </details>` : ""}
+
+      <details style="border-top:1px solid var(--border);padding-top:10px;margin-top:10px">
+        <summary style="cursor:pointer;font-size:11.5px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;list-style:none">All fields ▾</summary>
+        <dl class="kv" style="margin-top:10px">${kvRows}</dl>
+      </details>
+    </div>`;
+
+  // Attach favicon (with initial fallback)
+  attachLogo(card.querySelector(".job-logo"), f.company, f.orgUrl);
+
+  // Expand toggle
+  const expBtn = card.querySelector(".expand-btn");
+  const expBody = card.querySelector(".expand-body");
+  expBtn.addEventListener("click", ()=>{
+    const open = expBody.classList.toggle("open");
+    expBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    expBtn.querySelector("span").textContent = open ? "Hide details" : "Match details";
+  });
+
+  return card;
+}
+
+})(); // end IIFE
+</script>
+</body>
+</html>
